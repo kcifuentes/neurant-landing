@@ -22,6 +22,11 @@ const eslintConfig = [
       ".turbo/**",
     ],
   },
+  {
+    rules: {
+      "@typescript-eslint/no-unsafe-declaration-merging": "off",
+    },
+  },
 ];
 
 export default eslintConfig;

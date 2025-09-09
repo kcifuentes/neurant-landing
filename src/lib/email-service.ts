@@ -7,11 +7,28 @@ export interface EmailTemplate {
   text?: string;
 }
 
+export interface WaitlistUserData extends Record<string, unknown> {
+  email: string;
+  full_name: string;
+  company_name: string;
+  industry?: string;
+  industry_id?: string;
+  company_size: string;
+  country: string;
+  chatbot_type: string;
+  expected_volume: string;
+  phone?: string;
+  website?: string;
+  additional_info?: string;
+  user_ip?: string;
+  created_at?: string | null;
+}
+
 export interface EmailJob {
   id: string;
   to: string;
   template: EmailTemplate;
-  data: Record<string, any>;
+  data: Record<string, unknown>;
   status: 'pending' | 'sent' | 'failed';
   attempts: number;
   maxAttempts: number;
@@ -198,7 +215,7 @@ export const emailTemplates = {
                   <h3 style="color: #1f2937; margin: 0 0 15px 0; font-size: 18px;">Información registrada:</h3>
                   <p style="color: #6b7280; margin: 0 0 8px 0;"><strong>Email:</strong> {{email}}</p>
                   <p style="color: #6b7280; margin: 0 0 8px 0;"><strong>Empresa:</strong> {{company_name}}</p>
-                  <p style="color: #6b7280; margin: 0 0 8px 0;"><strong>Industria:</strong> {{industry}}</p>
+                  <p style="color: #6b7280; margin: 0 0 8px 0;"><strong>Industria:</strong> {{industry}}{{industry_id}}</p>
                   <p style="color: #6b7280; margin: 0;"><strong>Tamaño:</strong> {{company_size}}</p>
                 </div>
 
@@ -238,7 +255,7 @@ Hola {{full_name}},
 Información registrada:
 - Email: {{email}}
 - Empresa: {{company_name}}
-- Industria: {{industry}}
+- Industria: {{industry}}{{industry_id}}
 - Tamaño: {{company_size}}
 
 Nuestro equipo te contactará pronto con acceso temprano a la plataforma.
@@ -296,7 +313,7 @@ Este email fue enviado a {{email}}
                     </tr>
                     <tr>
                       <td style="padding: 8px 0; color: #374151; font-weight: 600;">Industria:</td>
-                      <td style="padding: 8px 0; color: #1f2937;">{{industry}}</td>
+                      <td style="padding: 8px 0; color: #1f2937;">{{industry}}{{industry_id}}</td>
                     </tr>
                     <tr>
                       <td style="padding: 8px 0; color: #374151; font-weight: 600;">Tamaño:</td>
@@ -350,7 +367,7 @@ Información del Cliente:
 - Email: {{email}}
 - Teléfono: {{phone}}
 - Empresa: {{company_name}}
-- Industria: {{industry}}
+- Industria: {{industry}}{{industry_id}}
 - Tamaño: {{company_size}}
 - País: {{country}}
 - Tipo Chatbot: {{chatbot_type}}
@@ -367,7 +384,7 @@ IP: {{user_ip}}
 
 // Main service functions
 export class EmailService {
-  static async sendWelcomeEmail(userData: any): Promise<string> {
+  static async sendWelcomeEmail(userData: WaitlistUserData): Promise<string> {
     const jobId = emailQueue.add({
       to: userData.email,
       template: emailTemplates.welcomeUser,
@@ -379,7 +396,7 @@ export class EmailService {
     return jobId;
   }
 
-  static async sendInternalNotification(userData: any): Promise<string> {
+  static async sendInternalNotification(userData: WaitlistUserData): Promise<string> {
     const internalEmail = process.env.INTERNAL_NOTIFICATION_EMAIL || 'team@innovarting.com';
     
     const jobId = emailQueue.add({
@@ -426,7 +443,7 @@ export class EmailService {
   }
 
   // Utility for direct sending (bypass queue) - for testing
-  static async sendDirectEmail(to: string, template: EmailTemplate, data: Record<string, any>): Promise<void> {
+  static async sendDirectEmail(to: string, template: EmailTemplate, data: Record<string, unknown>): Promise<void> {
     let html = template.html;
     let text = template.text || '';
     let subject = template.subject;
