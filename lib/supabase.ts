@@ -1,62 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-
-// Database Types
-export interface Database {
-  public: {
-    Tables: {
-      waitlist: {
-        Row: {
-          id: string;
-          email: string;
-          full_name: string | null;
-          company: string | null;
-          role: string | null;
-          interest_level: 'low' | 'medium' | 'high';
-          referral_source: string | null;
-          additional_info: string | null;
-          created_at: string;
-          updated_at: string;
-          is_active: boolean;
-        };
-        Insert: {
-          id?: string;
-          email: string;
-          full_name?: string | null;
-          company?: string | null;
-          role?: string | null;
-          interest_level?: 'low' | 'medium' | 'high';
-          referral_source?: string | null;
-          additional_info?: string | null;
-          created_at?: string;
-          updated_at?: string;
-          is_active?: boolean;
-        };
-        Update: {
-          id?: string;
-          email?: string;
-          full_name?: string | null;
-          company?: string | null;
-          role?: string | null;
-          interest_level?: 'low' | 'medium' | 'high';
-          referral_source?: string | null;
-          additional_info?: string | null;
-          created_at?: string;
-          updated_at?: string;
-          is_active?: boolean;
-        };
-      };
-    };
-    Views: {
-      [_ in never]: never;
-    };
-    Functions: {
-      [_ in never]: never;
-    };
-    Enums: {
-      interest_level: 'low' | 'medium' | 'high';
-    };
-  };
-}
+import { Database } from './database.types';
 
 // Supabase Configuration
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -98,10 +41,38 @@ export const createSupabaseClient = () => {
 // Singleton instance
 export const supabase = createSupabaseClient();
 
-// Waitlist Types for Form Handling
-export type WaitlistEntry = Database['public']['Tables']['waitlist']['Row'];
-export type WaitlistInsert = Database['public']['Tables']['waitlist']['Insert'];
-export type WaitlistUpdate = Database['public']['Tables']['waitlist']['Update'];
+// Types for Form Handling
+export type Industry = Database['public']['Tables']['industries']['Row'];
+export type WaitlistEntry = Database['public']['Tables']['waitlist_registrations']['Row'];
+export type WaitlistInsert = Database['public']['Tables']['waitlist_registrations']['Insert'];
+export type WaitlistUpdate = Database['public']['Tables']['waitlist_registrations']['Update'];
+
+// Utility Functions for Industries
+export const industriesService = {
+  // Get all active industries
+  async getActiveIndustries() {
+    try {
+      const { data, error } = await supabase
+        .from('industries')
+        .select('*')
+        .eq('is_active', true)
+        .order('sort_order', { ascending: true });
+
+      if (error) {
+        console.error('Error fetching industries:', error);
+        throw new Error(`Failed to fetch industries: ${error.message}`);
+      }
+
+      return { data: data || [], error: null };
+    } catch (error) {
+      console.error('Unexpected error in getActiveIndustries:', error);
+      return { 
+        data: [], 
+        error: error instanceof Error ? error : new Error('Unknown error occurred') 
+      };
+    }
+  }
+};
 
 // Utility Functions for Waitlist Operations
 export const waitlistService = {
@@ -109,7 +80,7 @@ export const waitlistService = {
   async addEntry(entry: WaitlistInsert) {
     try {
       const { data, error } = await supabase
-        .from('waitlist')
+        .from('waitlist_registrations')
         .insert([entry])
         .select()
         .single();
@@ -133,10 +104,9 @@ export const waitlistService = {
   async checkEmailExists(email: string) {
     try {
       const { data, error } = await supabase
-        .from('waitlist')
+        .from('waitlist_registrations')
         .select('id')
         .eq('email', email)
-        .eq('is_active', true)
         .single();
 
       if (error && error.code !== 'PGRST116') { // PGRST116 = no rows returned
@@ -158,9 +128,8 @@ export const waitlistService = {
   async getStats() {
     try {
       const { count, error } = await supabase
-        .from('waitlist')
-        .select('*', { count: 'exact', head: true })
-        .eq('is_active', true);
+        .from('waitlist_registrations')
+        .select('*', { count: 'exact', head: true });
 
       if (error) {
         console.error('Error getting waitlist stats:', error);
@@ -182,7 +151,7 @@ export const waitlistService = {
 export const checkSupabaseConnection = async () => {
   try {
     const { error } = await supabase
-      .from('waitlist')
+      .from('industries')
       .select('id')
       .limit(1);
 
