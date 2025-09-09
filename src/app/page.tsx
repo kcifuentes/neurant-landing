@@ -4,6 +4,17 @@ export default function Home() {
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+        <div className="text-center mb-6">
+          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            🤖 NeurAnt Landing Page
+          </h1>
+          <div className="bg-green-100 dark:bg-green-900 px-4 py-2 rounded-lg border border-green-200 dark:border-green-800">
+            <p className="text-lg font-semibold text-green-800 dark:text-green-200">
+              ✅ Auto-Sync Active - Deploy Test #{Date.now().toString().slice(-4)}
+            </p>
+          </div>
+        </div>
+
         <Image
           className="dark:invert"
           src="/next.svg"
@@ -12,18 +23,24 @@ export default function Home() {
           height={38}
           priority
         />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+        
+        <div className="bg-blue-50 dark:bg-blue-900 p-6 rounded-lg border border-blue-200 dark:border-blue-800 max-w-2xl">
+          <h2 className="text-xl font-bold mb-4 text-blue-800 dark:text-blue-200">🪝 Auto-Sync System Status</h2>
+          <ol className="font-mono list-inside list-decimal text-sm/6 space-y-2">
+            <li className="tracking-[-.01em] text-green-700 dark:text-green-300">
+              <strong>✅ Pre-commit Hook:</strong> Detects apps/landing/ changes
+            </li>
+            <li className="tracking-[-.01em] text-blue-700 dark:text-blue-300">
+              <strong>🔄 Auto-Sync:</strong> Syncs to public repo before commit
+            </li>
+            <li className="tracking-[-.01em] text-purple-700 dark:text-purple-300">
+              <strong>🚀 Vercel Deploy:</strong> Should trigger on public repo push
+            </li>
+            <li className="tracking-[-.01em] text-orange-700 dark:text-orange-300">
+              <strong>🌐 Live URL:</strong> neurant.innovarting.com
+            </li>
+          </ol>
+        </div>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
