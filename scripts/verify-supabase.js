@@ -57,13 +57,13 @@ async function verifySupabaseConnection() {
 
     // Test basic connection
     const { data, error } = await supabase
-      .from('waitlist')
+      .from('waitlist_registrations')
       .select('count', { count: 'exact', head: true });
 
     if (error) {
-      if (error.message.includes('relation "waitlist" does not exist')) {
-        log('⚠️  Tabla waitlist no existe aún', 'yellow');
-        log('   Ejecuta el SQL del .env.local.example para crearla', 'yellow');
+      if (error.message.includes('relation "waitlist_registrations" does not exist')) {
+        log('⚠️  Tabla waitlist_registrations no existe aún', 'yellow');
+        log('   Ejecuta: npx supabase db push para aplicar migraciones', 'yellow');
         return 'table_missing';
       } else {
         log(`❌ Error de conexión: ${error.message}`, 'red');
@@ -79,8 +79,17 @@ async function verifySupabaseConnection() {
     const testEmail = `test_${Date.now()}@example.com`;
     
     const { error: insertError } = await supabase
-      .from('waitlist')
-      .insert({ email: testEmail });
+      .from('waitlist_registrations')
+      .insert({ 
+        full_name: 'Test User',
+        email: testEmail,
+        country: 'CO',
+        company_name: 'Test Company',
+        industry_id: '46b69971-0e17-4720-aa27-adb532d96b8c',
+        company_size: '1-10',
+        chatbot_type: 'soporte',
+        expected_volume: 'bajo'
+      });
 
     if (insertError) {
       if (insertError.message.includes('new row violates row-level security policy')) {
@@ -92,7 +101,7 @@ async function verifySupabaseConnection() {
     } else {
       log('✅ Insert test exitoso', 'green');
       // Clean up test data
-      await supabase.from('waitlist').delete().eq('email', testEmail);
+      await supabase.from('waitlist_registrations').delete().eq('email', testEmail);
     }
 
     log('\n🎉 Verificación completada exitosamente!', 'green');
@@ -127,7 +136,7 @@ async function main() {
     log('\n✅ Todo está configurado correctamente!', 'green');
     process.exit(0);
   } else if (result === 'table_missing') {
-    log('\n⚠️  Configuración parcial - crear tabla waitlist', 'yellow');
+    log('\n⚠️  Configuración parcial - crear tabla waitlist_registrations', 'yellow');
     process.exit(1);
   } else {
     log('\n❌ Hay problemas de configuración', 'red');
