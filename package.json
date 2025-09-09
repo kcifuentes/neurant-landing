@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start --port 3002",
     "lint": "eslint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "verify-supabase": "node scripts/verify-supabase.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
@@ -19,7 +20,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hook-form": "^7.62.0",
-    "supabase": "^2.39.2",
+    "supabase": "^2.40.7",
     "tailwind-merge": "^3.3.1",
     "zod": "^4.1.5"
   },
@@ -29,6 +30,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^17.2.2",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
     "tailwindcss": "^4",
