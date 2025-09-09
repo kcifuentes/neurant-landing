@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { waitlistService } from '../../../../lib/supabase';
+import { waitlistService } from '../../../lib/supabase';
 
 // Rate limiting store (in-memory, per server instance)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
