@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { waitlistService } from '../../../lib/supabase';
+import { EmailService } from '../../../lib/email-service';
 
 // Rate limiting store (in-memory, per server instance)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
@@ -234,6 +235,32 @@ export async function POST(request: NextRequest) {
       ip: clientIP,
       user_agent: request.headers.get('user-agent')?.substring(0, 100)
     });
+
+    // Send email notifications (async, non-blocking)
+    // Note: We don't await these to avoid blocking the response
+    try {
+      // Prepare email data
+      const emailData = {
+        ...validData,
+        user_ip: clientIP,
+        created_at: insertResult.data.created_at
+      };
+
+      // Send welcome email to user
+      const welcomeJobId = await EmailService.sendWelcomeEmail(emailData);
+      console.log(`[${requestId}] Welcome email queued: ${welcomeJobId}`);
+
+      // Send internal notification to team
+      const internalJobId = await EmailService.sendInternalNotification(emailData);
+      console.log(`[${requestId}] Internal notification queued: ${internalJobId}`);
+
+    } catch (emailError) {
+      // Log email errors but don't fail the registration
+      console.error(`[${requestId}] Email notification error (non-blocking):`, {
+        error: emailError instanceof Error ? emailError.message : 'Unknown email error',
+        stack: emailError instanceof Error ? emailError.stack : undefined
+      });
+    }
 
     // Return success response
     return NextResponse.json(
