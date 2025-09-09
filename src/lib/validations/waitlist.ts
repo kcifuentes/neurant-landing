@@ -70,21 +70,21 @@ export const WaitlistRegistrationSchema = z.object({
   // Company size enum validation
   companySize: z
     .enum(Object.values(CompanySize) as [string, ...string[]])
-    .refine(val => Object.values(CompanySize).includes(val as any), {
+    .refine(val => Object.values(CompanySize).includes(val as typeof CompanySize[keyof typeof CompanySize]), {
       message: 'Selecciona un tamaño de empresa válido'
     }),
 
   // Chatbot type enum validation
   chatbotType: z
     .enum(Object.values(ChatbotType) as [string, ...string[]])
-    .refine(val => Object.values(ChatbotType).includes(val as any), {
+    .refine(val => Object.values(ChatbotType).includes(val as typeof ChatbotType[keyof typeof ChatbotType]), {
       message: 'Selecciona un tipo de chatbot válido'
     }),
 
   // Expected volume enum validation
   expectedVolume: z
     .enum(Object.values(ExpectedVolume) as [string, ...string[]])
-    .refine(val => Object.values(ExpectedVolume).includes(val as any), {
+    .refine(val => Object.values(ExpectedVolume).includes(val as typeof ExpectedVolume[keyof typeof ExpectedVolume]), {
       message: 'Selecciona un volumen esperado válido'
     }),
 
@@ -199,7 +199,7 @@ export const validateWaitlistData = (data: unknown) => {
   } catch (error) {
     if (error instanceof z.ZodError) {
       // Transform Zod errors to user-friendly format
-      const fieldErrors = error.issues.reduce((acc: Record<string, string>, err: any) => {
+      const fieldErrors = error.issues.reduce((acc: Record<string, string>, err) => {
         const field = err.path.join('.');
         acc[field] = err.message;
         return acc;
