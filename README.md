@@ -117,30 +117,38 @@ This landing page uses a consistent design system with:
 
 ### Deploy to Vercel (Recommended)
 
-1. **Push to GitHub**
-   ```bash
-   git push origin main
-   ```
+**Vercel Native GitHub Integration** - No CI/CD files needed!
 
-2. **Connect to Vercel**
+1. **Connect to Vercel**
    - Go to [Vercel](https://vercel.com)
    - Import your GitHub repository
-   - Configure environment variables
-   - Deploy automatically
+   - Automatic deployment on every push to `main`
+   - Preview deployments for all Pull Requests
 
-3. **Set up custom domain** (optional)
-   - Add your domain in Vercel dashboard
-   - Configure DNS records
-   - SSL certificate is automatic
+2. **Configure Environment Variables**
+   - Add required variables in Vercel Dashboard
+   - See `DEPLOYMENT.md` for complete setup guide
+
+3. **Deploy automatically on git push!** ⚡
 
 ### Environment Variables for Production
 
+⚠️ **Important**: Variables with `NEXT_PUBLIC_` prefix are visible in the browser
+
 ```env
-NEXT_PUBLIC_APP_URL=https://your-domain.com
-NEXT_PUBLIC_SUPABASE_URL=your_production_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_production_supabase_key
-NEXT_PUBLIC_GA_ID=your_google_analytics_id
+# Production URLs (required)
+NEXT_PUBLIC_FRONTEND_URL=https://neurant.innovarting.com
+NEXT_PUBLIC_API_URL=https://neurant.innovarting.com/api
+
+# Supabase (if using database)
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Private Variables (server-side only)
 RESEND_API_KEY=your_resend_api_key
+
+# Optional
+NEXT_PUBLIC_GA_ID=your_google_analytics_id
 ```
 
 ## 📊 Performance
