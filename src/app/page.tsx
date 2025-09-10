@@ -6,12 +6,18 @@ import { WaitlistSection } from '@/components/sections/waitlist-section'
 export default function Home() {
   return (
     <div className="min-h-screen">
-      <HeroSection />
-      <FeaturesSection />
-      <ExpectativaMomentumSection />
-      <div id="waitlist-section">
+      <section id="hero">
+        <HeroSection />
+      </section>
+      <section id="features">
+        <FeaturesSection />
+      </section>
+      <section id="momentum">
+        <ExpectativaMomentumSection />
+      </section>
+      <section id="waitlist">
         <WaitlistSection />
-      </div>
+      </section>
     </div>
   );
 }
