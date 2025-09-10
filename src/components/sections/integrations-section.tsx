@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Calendar, Mail, ShoppingBag, MessageSquare, Slack, Send } from 'lucide-react'
+import { Calendar, Mail, ShoppingBag } from 'lucide-react'
 import { FaWhatsapp } from 'react-icons/fa'
 import { SiSlack, SiTelegram } from 'react-icons/si'
 import { Card } from '@/components/ui/card'

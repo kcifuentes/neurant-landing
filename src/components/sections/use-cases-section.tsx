@@ -228,12 +228,12 @@ export function UseCasesSection() {
                   <div className="space-y-3">
                     <div className="flex">
                       <div className="bg-blue-500/20 rounded-lg px-3 py-2 max-w-[80%]">
-                        <div className="text-sm text-slate-200">"{useCase.example.customer}"</div>
+                        <div className="text-sm text-slate-200">&ldquo;{useCase.example.customer}&rdquo;</div>
                       </div>
                     </div>
                     <div className="flex justify-end">
                       <div className={`bg-gradient-to-r ${useCase.color} bg-opacity-20 rounded-lg px-3 py-2 max-w-[80%]`}>
-                        <div className="text-sm text-slate-200">"{useCase.example.bot}"</div>
+                        <div className="text-sm text-slate-200">&ldquo;{useCase.example.bot}&rdquo;</div>
                       </div>
                     </div>
                   </div>

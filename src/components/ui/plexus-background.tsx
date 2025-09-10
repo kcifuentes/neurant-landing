@@ -12,7 +12,7 @@ interface PlexusNode {
 
 export function PlexusBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number>(0)
   const nodesRef = useRef<PlexusNode[]>([])
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -135,7 +135,7 @@ export function PlexusBackground() {
     window.addEventListener('resize', handleResize)
 
     // Observer para detectar cambios en el tamaño del contenedor padre
-    const resizeObserver = new ResizeObserver((entries) => {
+    const resizeObserver = new ResizeObserver(() => {
       // Usar debounce para evitar redimensionamiento excesivo
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
