@@ -1,7 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Bot, Mail, MapPin, Twitter, Linkedin, Github } from 'lucide-react'
+import { Bot, Mail, MapPin } from 'lucide-react'
+import { FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa'
 
 const productLinks = [
   { name: 'Características', href: '#features' },
@@ -24,9 +25,9 @@ const legalLinks = [
 ]
 
 const socialLinks = [
-  { name: 'Twitter', icon: Twitter, href: '#twitter' },
-  { name: 'LinkedIn', icon: Linkedin, href: '#linkedin' },
-  { name: 'GitHub', icon: Github, href: '#github' }
+  { name: 'Twitter', icon: FaTwitter, href: '#twitter' },
+  { name: 'LinkedIn', icon: FaLinkedin, href: '#linkedin' },
+  { name: 'GitHub', icon: FaGithub, href: '#github' }
 ]
 
 export function Footer() {
@@ -49,7 +50,7 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-gradient-to-b from-background to-muted/20 border-t border-border/20">
+    <footer className="bg-gradient-to-b from-slate-900 to-slate-950 border-t border-slate-700/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
@@ -63,23 +64,23 @@ export function Footer() {
           >
             <div className="flex items-center space-x-3 mb-6">
               <div className="relative">
-                <Bot className="h-8 w-8 text-primary" />
+                <Bot className="h-8 w-8 text-orange-400" />
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-orange-400 to-red-400 rounded-full animate-pulse" />
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-primary to-orange-600 bg-clip-text text-transparent">
+              <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
                 NeurAnt
               </span>
             </div>
-            <p className="text-muted-foreground text-lg mb-6 max-w-md">
+            <p className="text-slate-300 text-lg mb-6 max-w-md">
               La plataforma de chatbots inteligentes que revoluciona la atención al cliente con IA avanzada y integración perfecta.
             </p>
-            <div className="space-y-3 text-sm text-muted-foreground">
+            <div className="space-y-3 text-sm text-slate-400">
               <div className="flex items-center space-x-2">
-                <Mail className="h-4 w-4 text-primary" />
+                <Mail className="h-4 w-4 text-orange-400" />
                 <span>contacto@neurant.com</span>
               </div>
               <div className="flex items-center space-x-2">
-                <MapPin className="h-4 w-4 text-primary" />
+                <MapPin className="h-4 w-4 text-orange-400" />
                 <span>Latinoamérica</span>
               </div>
             </div>
@@ -92,13 +93,13 @@ export function Footer() {
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <h3 className="font-semibold text-foreground mb-6">Producto</h3>
+            <h3 className="font-semibold text-white mb-6">Producto</h3>
             <ul className="space-y-4">
               {productLinks.map((link) => (
                 <li key={link.name}>
                   <button
                     onClick={() => scrollToSection(link.href)}
-                    className="text-muted-foreground hover:text-primary transition-colors duration-200 hover:translate-x-1 transform inline-block"
+                    className="text-slate-300 hover:text-orange-400 transition-colors duration-200 hover:translate-x-1 transform inline-block"
                   >
                     {link.name}
                   </button>
@@ -114,13 +115,13 @@ export function Footer() {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <h3 className="font-semibold text-foreground mb-6">Empresa</h3>
+            <h3 className="font-semibold text-white mb-6">Empresa</h3>
             <ul className="space-y-4">
               {companyLinks.map((link) => (
                 <li key={link.name}>
                   <button
                     onClick={() => scrollToSection(link.href)}
-                    className="text-muted-foreground hover:text-primary transition-colors duration-200 hover:translate-x-1 transform inline-block"
+                    className="text-slate-300 hover:text-orange-400 transition-colors duration-200 hover:translate-x-1 transform inline-block"
                   >
                     {link.name}
                   </button>
@@ -136,11 +137,11 @@ export function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
-          className="border-t border-border/20 pt-8"
+          className="border-t border-slate-700/50 pt-8"
         >
           <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
             {/* Copyright */}
-            <div className="text-muted-foreground text-sm">
+            <div className="text-slate-400 text-sm">
               © {currentYear} NeurAnt. Todos los derechos reservados.
             </div>
 
@@ -150,12 +151,12 @@ export function Footer() {
                 <span key={link.name} className="flex items-center space-x-2">
                   <button
                     onClick={() => scrollToSection(link.href)}
-                    className="text-muted-foreground hover:text-primary transition-colors duration-200"
+                    className="text-slate-400 hover:text-orange-400 transition-colors duration-200"
                   >
                     {link.name}
                   </button>
                   {index < legalLinks.length - 1 && (
-                    <span className="text-border">•</span>
+                    <span className="text-slate-600">•</span>
                   )}
                 </span>
               ))}
@@ -167,7 +168,7 @@ export function Footer() {
                 <button
                   key={social.name}
                   onClick={() => scrollToSection(social.href)}
-                  className="p-2 rounded-full bg-muted/50 text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-110"
+                  className="p-2 rounded-full bg-slate-800/50 text-slate-400 hover:bg-orange-500 hover:text-white transition-all duration-300 hover:scale-110"
                   aria-label={social.name}
                 >
                   <social.icon className="h-4 w-4" />

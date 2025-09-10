@@ -1,5 +1,7 @@
 import { HeroSection } from '@/components/sections/hero-section'
 import { FeaturesSection } from '@/components/sections/features-section'
+import { IntegrationsSection } from '@/components/sections/integrations-section'
+import { UseCasesSection } from '@/components/sections/use-cases-section'
 import { ExpectativaMomentumSection } from '@/components/sections/expectativa-momentum-section'
 import { WaitlistSection } from '@/components/sections/waitlist-section'
 
@@ -11,6 +13,12 @@ export default function Home() {
       </section>
       <section id="features">
         <FeaturesSection />
+      </section>
+      <section id="integrations">
+        <IntegrationsSection />
+      </section>
+      <section id="use-cases">
+        <UseCasesSection />
       </section>
       <section id="momentum">
         <ExpectativaMomentumSection />

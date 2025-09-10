@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 import { Bot, Menu } from 'lucide-react'
 
 const navigationItems = [
@@ -117,7 +117,8 @@ export function Header() {
                   <span className="sr-only">Abrir menú</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-80 px-6">
+              <SheetContent side="right" className="w-80 px-6 bg-white dark:bg-gray-900 border-l border-gray-200 dark:border-gray-700 shadow-2xl">
+                <SheetTitle className="sr-only">Menú de navegación</SheetTitle>
                 <div className="flex flex-col h-full">
                   {/* Mobile Header */}
                   <div className="flex items-center justify-between py-6 border-b border-border/20">
