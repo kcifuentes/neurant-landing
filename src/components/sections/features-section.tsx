@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, type Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { 
@@ -10,8 +10,19 @@ import {
   BarChart, 
   Users, 
   Settings,
-  ArrowRight 
+  ArrowRight,
+  Sparkles,
+  Zap
 } from 'lucide-react'
+import { 
+  staggerContainerVariants, 
+  fadeInUpVariants, 
+  glassCardVariants,
+  magneticHoverVariants,
+  morphingBlobVariants,
+  generateParticles,
+  viewportOptions
+} from '@/lib/animations'
 
 interface FeatureItem {
   icon: React.ComponentType<{ className?: string }>
@@ -25,147 +36,184 @@ const features: FeatureItem[] = [
     icon: Bot,
     title: "Chatbots Inteligentes",
     description: "IA avanzada con procesamiento de lenguaje natural para respuestas precisas y conversaciones fluidas.",
-    color: "from-blue-500 to-cyan-500"
+    color: "from-orange-500 to-red-500"
   },
   {
     icon: Smartphone,
     title: "Multi-plataforma",
     description: "Despliega en WhatsApp, Telegram, sitio web y Slack desde una sola configuración.",
-    color: "from-green-500 to-emerald-500"
+    color: "from-orange-600 to-amber-500"
   },
   {
     icon: FileSearch,
     title: "Documentos Inteligentes",
     description: "Busca y encuentra información específica en tus documentos usando tecnología RAG avanzada.",
-    color: "from-purple-500 to-violet-500"
+    color: "from-red-500 to-orange-500"
   },
   {
     icon: BarChart,
     title: "Analytics Avanzados",
     description: "Métricas detalladas de conversaciones, satisfacción del cliente y rendimiento en tiempo real.",
-    color: "from-orange-500 to-red-500"
+    color: "from-amber-500 to-orange-600"
   },
   {
     icon: Users,
     title: "Transferencia a Humanos",
     description: "Escalación automática a agentes humanos cuando se requiere intervención personalizada.",
-    color: "from-pink-500 to-rose-500"
+    color: "from-orange-500 to-red-600"
   },
   {
     icon: Settings,
     title: "Configuración Fácil",
     description: "Setup completo en minutos, no horas. Interface intuitiva sin conocimientos técnicos.",
-    color: "from-indigo-500 to-blue-500"
+    color: "from-red-500 to-amber-500"
   }
 ]
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2
-    }
-  }
-}
-
-const itemVariants: Variants = {
-  hidden: { 
-    opacity: 0,
-    y: 20,
-    scale: 0.9
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      type: "spring",
-      duration: 0.6,
-      bounce: 0.1
-    }
-  }
-}
-
 export function FeaturesSection() {
+  const particles = generateParticles(8)
+
   return (
-    <section className="py-24 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 bg-grid-gray-100 bg-[size:20px_20px] opacity-40" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-gradient-to-r from-blue-200/30 to-purple-200/30 rounded-full blur-3xl" />
+    <section className="py-32 bg-gradient-to-b from-white via-orange-50/30 to-red-50/20 dark:from-gray-950 dark:via-orange-950/30 dark:to-red-950/20 relative overflow-hidden">
+      {/* Advanced Background Effects */}
+      <div className="absolute inset-0">
+        {/* Morphing Background Blobs */}
+        <motion.div 
+          variants={morphingBlobVariants}
+          animate="animate"
+          className="absolute top-32 left-20 w-80 h-80 bg-gradient-to-r from-orange-300/20 to-red-300/20 dark:from-orange-500/10 dark:to-red-500/10 blur-3xl"
+        />
+        <motion.div 
+          variants={morphingBlobVariants}
+          animate="animate"
+          style={{ animationDelay: '3s' }}
+          className="absolute bottom-32 right-20 w-96 h-96 bg-gradient-to-l from-amber-300/15 to-orange-300/15 dark:from-amber-500/8 dark:to-orange-500/8 blur-3xl"
+        />
+
+        {/* Floating Particles */}
+        {particles.map((particle) => (
+          <motion.div
+            key={particle.id}
+            className="absolute w-1 h-1 bg-gradient-to-r from-orange-400 to-red-400 dark:from-orange-300 dark:to-red-300 rounded-full opacity-40"
+            style={{
+              left: `${particle.x}%`,
+              width: particle.size,
+              height: particle.size,
+            }}
+            animate={{
+              y: [-50, typeof window !== 'undefined' ? -window.innerHeight - 50 : -600],
+              opacity: [0, 0.6, 0],
+              scale: [0.3, 1, 0.3],
+            }}
+            transition={{
+              duration: particle.duration + 2,
+              repeat: Infinity,
+              delay: particle.delay,
+              ease: "linear",
+            }}
+          />
+        ))}
+
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#f97316_1px,transparent_1px),linear-gradient(to_bottom,#f97316_1px,transparent_1px)] bg-[size:6rem_6rem] opacity-3" />
+      </div>
       
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          viewport={viewportOptions}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-20"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded-full text-sm font-medium mb-6"
+            viewport={viewportOptions}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="inline-flex items-center gap-3 bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-950/50 dark:to-red-950/50 text-orange-700 dark:text-orange-300 px-6 py-3 rounded-full text-sm font-medium mb-8 border border-orange-200/50 dark:border-orange-800/50 backdrop-blur-sm shadow-lg"
           >
-            <Bot className="w-4 h-4" />
+            <Sparkles className="w-5 h-5" />
             Características Principales
           </motion.div>
           
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+          <motion.h2 
+            variants={fadeInUpVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOptions}
+            className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-8 leading-tight"
+          >
             Todo lo que necesitas para{' '}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-orange-500 via-orange-600 to-red-500 bg-clip-text text-transparent">
               automatizar
             </span>{' '}
             tu atención al cliente
-          </h2>
+          </motion.h2>
           
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Descubre por qué más de 500+ empresas confían en NeurAnt para transformar 
+          <motion.p 
+            variants={fadeInUpVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportOptions}
+            className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed"
+          >
+            Descubre por qué más de <strong className="text-orange-600 dark:text-orange-400">500+ empresas</strong> confían en NeurAnt para transformar 
             su experiencia de atención al cliente con inteligencia artificial.
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Features Grid */}
         <motion.div
-          variants={containerVariants}
+          variants={staggerContainerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
+          viewport={viewportOptions}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
         >
           {features.map((feature, index) => {
             const IconComponent = feature.icon
             return (
-              <motion.div key={index} variants={itemVariants}>
-                <Card className="p-8 h-full bg-white/70 backdrop-blur-sm border border-gray-200/50 hover:border-blue-200/50 hover:bg-white/90 transition-all duration-300 group hover:shadow-xl hover:shadow-blue-500/10">
-                  <div className="text-center space-y-4">
-                    {/* Icon */}
-                    <motion.div
-                      whileHover={{ 
-                        scale: 1.1,
-                        rotate: [0, -5, 5, 0],
-                        transition: { duration: 0.3 }
-                      }}
-                      className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.color} text-white shadow-lg shadow-blue-500/25 group-hover:shadow-xl group-hover:shadow-blue-500/30 transition-all duration-300`}
-                    >
-                      <IconComponent className="w-8 h-8" />
-                    </motion.div>
+              <motion.div key={index} variants={glassCardVariants}>
+                <motion.div
+                  whileHover="hover"
+                  variants={magneticHoverVariants}
+                  className="group"
+                >
+                  <Card className="p-8 h-full bg-white/60 dark:bg-gray-900/40 backdrop-blur-xl border-white/60 dark:border-gray-700/60 hover:bg-white/80 dark:hover:bg-gray-900/60 transition-all duration-500 group shadow-2xl hover:shadow-orange-500/10 dark:hover:shadow-orange-500/5">
+                    <div className="text-center space-y-6">
+                      {/* Icon */}
+                      <motion.div
+                        whileHover={{ 
+                          scale: 1.1,
+                          rotate: [0, -5, 5, 0],
+                          transition: { duration: 0.4 }
+                        }}
+                        className={`inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br ${feature.color} text-white shadow-2xl shadow-orange-500/25 group-hover:shadow-3xl group-hover:shadow-orange-500/40 transition-all duration-500`}
+                      >
+                        <IconComponent className="w-10 h-10" />
+                      </motion.div>
 
-                    {/* Content */}
-                    <div className="space-y-3">
-                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-200">
-                        {feature.title}
-                      </h3>
-                      <p className="text-gray-600 leading-relaxed">
-                        {feature.description}
-                      </p>
+                      {/* Content */}
+                      <div className="space-y-4">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300">
+                          {feature.title}
+                        </h3>
+                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
+                          {feature.description}
+                        </p>
+                      </div>
+
+                      {/* Hover Effect Lines */}
+                      <motion.div
+                        className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 to-red-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
+                        initial={{ scaleX: 0 }}
+                        whileHover={{ scaleX: 1 }}
+                      />
                     </div>
-                  </div>
-                </Card>
+                  </Card>
+                </motion.div>
               </motion.div>
             )
           })}
@@ -173,33 +221,56 @@ export function FeaturesSection() {
 
         {/* Call to Action */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          viewport={viewportOptions}
+          transition={{ duration: 0.8, delay: 0.3 }}
           className="text-center"
         >
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-3xl p-8 border border-blue-100/50">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              ¿Listo para transformar tu atención al cliente?
-            </h3>
-            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Únete a cientos de empresas que ya están automatizando sus procesos 
-              y mejorando la satisfacción de sus clientes con NeurAnt.
-            </p>
+          <div className="relative">
+            {/* Background Glow */}
+            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 to-red-500/10 dark:from-orange-500/5 dark:to-red-500/5 blur-3xl rounded-3xl" />
             
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group"
+            <div className="relative bg-gradient-to-r from-white/80 to-orange-50/80 dark:from-gray-900/80 dark:to-orange-950/80 backdrop-blur-xl rounded-3xl p-12 border border-white/60 dark:border-gray-700/60 shadow-2xl">
+              <motion.h3 
+                className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6"
+                variants={fadeInUpVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOptions}
               >
-                Ver Demo en Vivo
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
-              </Button>
-            </motion.div>
+                ¿Listo para transformar tu atención al cliente?
+              </motion.h3>
+              
+              <motion.p 
+                className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
+                variants={fadeInUpVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOptions}
+              >
+                Únete a cientos de empresas que ya están automatizando sus procesos 
+                y mejorando la satisfacción de sus clientes con <strong className="text-orange-600 dark:text-orange-400">NeurAnt</strong>.
+              </motion.p>
+              
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                variants={fadeInUpVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={viewportOptions}
+              >
+                <Button 
+                  size="lg" 
+                  className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-12 py-6 rounded-2xl font-semibold text-lg shadow-2xl hover:shadow-orange-500/25 transition-all duration-300 group"
+                >
+                  <Zap className="mr-3 w-6 h-6 group-hover:rotate-12 transition-transform duration-300" />
+                  Ver Demo en Vivo
+                  <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform duration-300" />
+                </Button>
+              </motion.div>
+            </div>
           </div>
         </motion.div>
       </div>
