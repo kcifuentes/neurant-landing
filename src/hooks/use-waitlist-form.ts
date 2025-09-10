@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 // import { zodResolver } from '@hookform/resolvers/zod';
 import { WaitlistFormSchema, type WaitlistFormData, transformForDatabase } from '@/lib/validations/waitlist';
 
@@ -79,51 +80,48 @@ export function useWaitlistForm(): UseWaitlistFormReturn {
   // Progress calculation
   const stepProgress = ((currentStepIndex + 1) / STEP_ORDER.length) * 100;
 
-  // Validate current step fields
-  const validateCurrentStep = async (): Promise<boolean> => {
-    const fieldsToValidate = STEP_FIELDS[currentStep];
-    const currentValues = form.getValues();
-    
-    // Crear un objeto con solo los campos del step actual
-    const stepData = fieldsToValidate.reduce((acc, field) => {
-      acc[field] = currentValues[field];
-      return acc;
-    }, {} as Partial<WaitlistFormData>);
-    
-    try {
-      // Validar solo los campos necesarios del step actual
-      WaitlistFormSchema.pick(
-        fieldsToValidate.reduce((acc, field) => {
-          acc[field] = true;
-          return acc;
-        }, {} as Record<keyof WaitlistFormData, true>)
-      ).parse(stepData);
-      
-      // Si la validación pasa, limpiar errores
-      fieldsToValidate.forEach(field => {
-        form.clearErrors(field);
-      });
-      
-      return true;
-    } catch (error) {
-      // Establecer errores en el formulario
-      if (error && typeof error === 'object' && 'errors' in error) {
-        const zodError = error as { errors: Array<{ path: string[]; message: string }> };
-        zodError.errors.forEach((err) => {
-          const field = err.path[0] as keyof WaitlistFormData;
-          if (fieldsToValidate.includes(field)) {
-            form.setError(field, { message: err.message });
-          }
-        });
-      }
-      return false;
-    }
-  };
+  // Simple validation - this was causing issues
+  // const validateCurrentStep = async (): Promise<boolean> => {
+  //   // Will be used by nextStep function directly
+  //   return true;
+  // };
 
   // Navigation functions
   const nextStep = async () => {
-    const isValid = await validateCurrentStep();
-    if (!isValid) return;
+    // Simplified validation - just check if required fields have values
+    const fieldsToValidate = STEP_FIELDS[currentStep];
+    const currentValues = form.getValues();
+    
+    let hasEmptyFields = false;
+    
+    for (const field of fieldsToValidate) {
+      const value = currentValues[field];
+      if (!value || (typeof value === 'string' && value.trim() === '')) {
+        form.setError(field, { 
+          type: 'required',
+          message: 'Este campo es requerido' 
+        });
+        hasEmptyFields = true;
+      } else {
+        form.clearErrors(field);
+      }
+    }
+    
+    if (hasEmptyFields) {
+      // Show toast for step validation errors
+      const stepNames: Record<FormStep, string> = {
+        basic: 'información personal',
+        company: 'información de empresa', 
+        interests: 'intereses y necesidades'
+      };
+      
+      toast.error('Campos requeridos', {
+        description: `Por favor, completa todos los campos de ${stepNames[currentStep]}`,
+        duration: 4000,
+      });
+      
+      return;
+    }
 
     if (canGoNext) {
       const nextIndex = currentStepIndex + 1;
@@ -159,9 +157,44 @@ export function useWaitlistForm(): UseWaitlistFormReturn {
 
       // Final validation of all fields
       const formData = form.getValues();
+      console.log('Form data for validation:', formData);
+      console.log('Comments field length:', (formData.comments || '').length);
+      
       try {
         WaitlistFormSchema.parse(formData);
       } catch (error) {
+        console.error('Validation error:', error);
+        if (error instanceof Error && 'issues' in error) {
+          const issues = (error as any).issues;
+          console.error('Validation issues:', issues);
+          
+          // Show specific validation errors via toast
+          const firstIssue = issues[0];
+          if (firstIssue) {
+            const fieldLabels: Record<string, string> = {
+              fullName: 'Nombre completo',
+              email: 'Correo electrónico',
+              country: 'País',
+              companyName: 'Nombre de la empresa',
+              companySize: 'Tamaño de la empresa',
+              chatbotType: 'Tipo de chatbot',
+              expectedVolume: 'Volumen esperado',
+              industryId: 'Industria',
+              comments: 'Comentarios'
+            };
+            
+            const fieldName = fieldLabels[firstIssue.path[0]] || firstIssue.path[0];
+            toast.error(`Error en ${fieldName}`, {
+              description: firstIssue.message,
+              duration: 5000,
+            });
+          } else {
+            toast.error('Error de validación', {
+              description: 'Por favor, revisa todos los campos requeridos',
+              duration: 5000,
+            });
+          }
+        }
         setSubmitError('Por favor, revisa todos los campos requeridos');
         return;
       }
@@ -175,6 +208,9 @@ export function useWaitlistForm(): UseWaitlistFormReturn {
         referralSource: document.referrer || undefined
       });
 
+      console.log('Form data before transform:', formData);
+      console.log('API data after transform:', apiData);
+
       // Submit to API
       const response = await fetch('/api/waitlist', {
         method: 'POST',
@@ -186,12 +222,57 @@ export function useWaitlistForm(): UseWaitlistFormReturn {
 
       const result = await response.json();
 
+      console.log('API response:', { status: response.status, result });
+
       if (!response.ok) {
-        throw new Error(result.message || 'Error al enviar el formulario');
+        const errorMessage = result.message || 'Error al enviar el formulario';
+        
+        // Show specific error messages via toast
+        if (response.status === 400) {
+          if (result.code === 'EMAIL_EXISTS') {
+            toast.error('Email ya registrado', {
+              description: 'Este email ya está en nuestra lista de espera',
+              duration: 6000,
+            });
+          } else if (result.code === 'VALIDATION_ERROR') {
+            toast.error('Datos inválidos', {
+              description: 'Por favor, revisa la información ingresada',
+              duration: 5000,
+            });
+          } else {
+            toast.error('Error de validación', {
+              description: errorMessage,
+              duration: 5000,
+            });
+          }
+        } else if (response.status === 429) {
+          toast.error('Demasiadas solicitudes', {
+            description: 'Has excedido el límite. Intenta de nuevo más tarde',
+            duration: 8000,
+          });
+        } else if (response.status >= 500) {
+          toast.error('Error del servidor', {
+            description: 'Problema temporal en nuestros servidores. Intenta de nuevo',
+            duration: 6000,
+          });
+        } else {
+          toast.error('Error inesperado', {
+            description: errorMessage,
+            duration: 5000,
+          });
+        }
+        
+        throw new Error(errorMessage);
       }
 
       // Success
       setSubmitSuccess(true);
+      
+      // Show success toast
+      toast.success('¡Registro exitoso!', {
+        description: 'Te contactaremos pronto. Revisa tu email para más información.',
+        duration: 8000,
+      });
       
       // Track analytics for form completion
       if (typeof window !== 'undefined' && 'gtag' in window) {
@@ -206,7 +287,23 @@ export function useWaitlistForm(): UseWaitlistFormReturn {
 
     } catch (error) {
       console.error('Form submission error:', error);
-      setSubmitError(error instanceof Error ? error.message : 'Error inesperado. Inténtalo de nuevo.');
+      const errorMessage = error instanceof Error ? error.message : 'Error inesperado. Inténtalo de nuevo.';
+      
+      // Show error toast for unexpected errors
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        toast.error('Error de conexión', {
+          description: 'Verifica tu conexión a internet e intenta de nuevo',
+          duration: 6000,
+        });
+      } else if (!error instanceof Error || !error.message.includes('servidor')) {
+        // Don't show toast for server errors (already handled above)
+        toast.error('Error inesperado', {
+          description: errorMessage,
+          duration: 5000,
+        });
+      }
+      
+      setSubmitError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }

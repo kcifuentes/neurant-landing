@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { Toaster } from "@/components/ui/toaster";
 import { generateMetadata as generateSEOMetadata, structuredData } from "@/lib/seo-colombia";
 
 const geistSans = Geist({
@@ -59,6 +60,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <ScrollToTop />
+        <Toaster />
       </body>
     </html>
   );

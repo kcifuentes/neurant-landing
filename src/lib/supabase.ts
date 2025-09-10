@@ -4,6 +4,7 @@ import { Database } from './database.types';
 // Supabase Configuration
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!supabaseUrl) {
   throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL environment variable');
@@ -38,8 +39,38 @@ export const createSupabaseClient = () => {
   return supabaseClient;
 };
 
-// Singleton instance
-export const supabase = createSupabaseClient();
+// Server-side Supabase Client with Service Role Key
+let supabaseServerClient: ReturnType<typeof createClient<Database>> | null = null;
+
+export const createSupabaseServerClient = () => {
+  if (!supabaseServerClient) {
+    if (!supabaseServiceRoleKey) {
+      throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY environment variable for server operations');
+    }
+    
+    try {
+      supabaseServerClient = createClient<Database>(supabaseUrl, supabaseServiceRoleKey, {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+        },
+        global: {
+          headers: {
+            'x-client-info': 'neurant-landing-server/1.0.0',
+          },
+        },
+      });
+    } catch (error) {
+      console.error('Error creating Supabase server client:', error);
+      throw new Error('Failed to initialize Supabase server client');
+    }
+  }
+  return supabaseServerClient;
+};
+
+// Singleton instances
+export const supabase = createSupabaseClient(); // Client-side
+export const supabaseServer = typeof window === 'undefined' ? createSupabaseServerClient() : supabase; // Server-side
 
 // Types for Form Handling
 export type Industry = Database['public']['Tables']['industries']['Row'];
@@ -52,7 +83,7 @@ export const industriesService = {
   // Get all active industries
   async getActiveIndustries() {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseServer
         .from('industries')
         .select('*')
         .eq('is_active', true)
@@ -74,12 +105,49 @@ export const industriesService = {
   }
 };
 
+// Static Countries Service (until countries table is implemented)
+export type Country = {
+  code: string;
+  name: string;
+};
+
+export const countriesService = {
+  // Get common Latin American countries
+  getCommonCountries(): { data: Country[]; error: null } {
+    const countries: Country[] = [
+      { code: 'AR', name: 'Argentina' },
+      { code: 'BO', name: 'Bolivia' },
+      { code: 'BR', name: 'Brasil' },
+      { code: 'CL', name: 'Chile' },
+      { code: 'CO', name: 'Colombia' },
+      { code: 'CR', name: 'Costa Rica' },
+      { code: 'CU', name: 'Cuba' },
+      { code: 'DO', name: 'República Dominicana' },
+      { code: 'EC', name: 'Ecuador' },
+      { code: 'SV', name: 'El Salvador' },
+      { code: 'GT', name: 'Guatemala' },
+      { code: 'HN', name: 'Honduras' },
+      { code: 'MX', name: 'México' },
+      { code: 'NI', name: 'Nicaragua' },
+      { code: 'PA', name: 'Panamá' },
+      { code: 'PY', name: 'Paraguay' },
+      { code: 'PE', name: 'Perú' },
+      { code: 'UY', name: 'Uruguay' },
+      { code: 'VE', name: 'Venezuela' },
+      { code: 'ES', name: 'España' },
+      { code: 'US', name: 'Estados Unidos' },
+    ];
+    
+    return { data: countries, error: null };
+  }
+};
+
 // Utility Functions for Waitlist Operations
 export const waitlistService = {
   // Add new waitlist entry
   async addEntry(entry: WaitlistInsert) {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseServer
         .from('waitlist_registrations')
         .insert([entry])
         .select()
@@ -103,7 +171,7 @@ export const waitlistService = {
   // Check if email already exists
   async checkEmailExists(email: string) {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseServer
         .from('waitlist_registrations')
         .select('id')
         .eq('email', email)
@@ -127,7 +195,7 @@ export const waitlistService = {
   // Get waitlist statistics
   async getStats() {
     try {
-      const { count, error } = await supabase
+      const { count, error } = await supabaseServer
         .from('waitlist_registrations')
         .select('*', { count: 'exact', head: true });
 
@@ -150,7 +218,7 @@ export const waitlistService = {
 // Connection Health Check
 export const checkSupabaseConnection = async () => {
   try {
-    const { error } = await supabase
+    const { error } = await supabaseServer
       .from('industries')
       .select('id')
       .limit(1);

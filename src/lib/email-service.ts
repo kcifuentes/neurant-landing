@@ -215,7 +215,7 @@ export const emailTemplates = {
                   <h3 style="color: #1f2937; margin: 0 0 15px 0; font-size: 18px;">Información registrada:</h3>
                   <p style="color: #6b7280; margin: 0 0 8px 0;"><strong>Email:</strong> {{email}}</p>
                   <p style="color: #6b7280; margin: 0 0 8px 0;"><strong>Empresa:</strong> {{company_name}}</p>
-                  <p style="color: #6b7280; margin: 0 0 8px 0;"><strong>Industria:</strong> {{industry}}{{industry_id}}</p>
+                  <p style="color: #6b7280; margin: 0 0 8px 0;"><strong>Industria:</strong> {{industry}}</p>
                   <p style="color: #6b7280; margin: 0;"><strong>Tamaño:</strong> {{company_size}}</p>
                 </div>
 
@@ -255,7 +255,7 @@ Hola {{full_name}},
 Información registrada:
 - Email: {{email}}
 - Empresa: {{company_name}}
-- Industria: {{industry}}{{industry_id}}
+- Industria: {{industry}}
 - Tamaño: {{company_size}}
 
 Nuestro equipo te contactará pronto con acceso temprano a la plataforma.
@@ -313,7 +313,7 @@ Este email fue enviado a {{email}}
                     </tr>
                     <tr>
                       <td style="padding: 8px 0; color: #374151; font-weight: 600;">Industria:</td>
-                      <td style="padding: 8px 0; color: #1f2937;">{{industry}}{{industry_id}}</td>
+                      <td style="padding: 8px 0; color: #1f2937;">{{industry}}</td>
                     </tr>
                     <tr>
                       <td style="padding: 8px 0; color: #374151; font-weight: 600;">Tamaño:</td>
@@ -334,18 +334,14 @@ Este email fue enviado a {{email}}
                   </table>
                 </div>
 
-                {{#website}}
                 <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0;">
-                  <strong>Website:</strong> <a href="{{website}}" style="color: #d97706;">{{website}}</a>
+                  <strong>Website:</strong> <span style="color: #d97706;">{{website}}</span>
                 </div>
-                {{/website}}
 
-                {{#additional_info}}
                 <div style="background: #f3f4f6; border-radius: 6px; padding: 15px; margin: 20px 0;">
-                  <strong>Información adicional:</strong><br>
-                  <span style="color: #4b5563;">{{additional_info}}</span>
+                  <strong>Comentarios:</strong><br>
+                  <span style="color: #4b5563;">{{comments}}</span>
                 </div>
-                {{/additional_info}}
 
                 <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
                   <p style="color: #6b7280; font-size: 14px; margin: 0;">
@@ -367,14 +363,14 @@ Información del Cliente:
 - Email: {{email}}
 - Teléfono: {{phone}}
 - Empresa: {{company_name}}
-- Industria: {{industry}}{{industry_id}}
+- Industria: {{industry}}
 - Tamaño: {{company_size}}
 - País: {{country}}
 - Tipo Chatbot: {{chatbot_type}}
 - Volumen Esperado: {{expected_volume}}
 - Website: {{website}}
 
-Información adicional: {{additional_info}}
+Comentarios: {{comments}}
 
 Fecha: {{created_at}}
 IP: {{user_ip}}
@@ -397,7 +393,7 @@ export class EmailService {
   }
 
   static async sendInternalNotification(userData: WaitlistUserData): Promise<string> {
-    const internalEmail = process.env.INTERNAL_NOTIFICATION_EMAIL || 'team@innovarting.com';
+    const internalEmail = process.env.INTERNAL_NOTIFICATION_EMAIL || 'innovarting.info@gmail.com';
     
     const jobId = emailQueue.add({
       to: internalEmail,

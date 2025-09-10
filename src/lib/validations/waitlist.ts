@@ -169,6 +169,41 @@ export const WaitlistFormSchema = WaitlistRegistrationSchema.pick({
 export type WaitlistRegistrationData = z.infer<typeof WaitlistRegistrationSchema>;
 export type WaitlistFormData = z.infer<typeof WaitlistFormSchema>;
 
+// Map frontend enum values to API expected values
+const mapCompanySize = (size: string): string => {
+  const sizeMap: Record<string, string> = {
+    'startup': '1-10',
+    'small': '11-50',
+    'medium': '51-200',
+    'large': '201-500',
+    'enterprise': '500+'
+  };
+  return sizeMap[size] || size;
+};
+
+const mapExpectedVolume = (volume: string): string => {
+  const volumeMap: Record<string, string> = {
+    'low': '<100',
+    'medium': '100-500',
+    'high': '500-1000',
+    'very_high': '1000-5000'
+  };
+  return volumeMap[volume] || volume;
+};
+
+const mapChatbotType = (type: string): string => {
+  const typeMap: Record<string, string> = {
+    'customer_support': 'customer_service',
+    'lead_generation': 'lead_generation', 
+    'sales': 'sales',
+    'faq': 'internal_operations',
+    'booking': 'internal_operations', 
+    'ecommerce': 'sales',
+    'other': 'other'
+  };
+  return typeMap[type] || 'other';
+};
+
 // Transform function to prepare data for database insertion
 export const transformForDatabase = (formData: WaitlistFormData, additionalData?: {
   ipAddress?: string;
@@ -177,18 +212,27 @@ export const transformForDatabase = (formData: WaitlistFormData, additionalData?
   utmMedium?: string;
   utmCampaign?: string;
   referralSource?: string;
-}): WaitlistRegistrationData => {
+}) => {
   return {
-    ...formData,
-    // Convert empty strings to null for optional fields
+    // Map field names to API expected format
+    full_name: formData.fullName,
+    email: formData.email,
+    country: formData.country,
+    company_name: formData.companyName,
+    company_size: mapCompanySize(formData.companySize),
+    chatbot_type: mapChatbotType(formData.chatbotType),
+    expected_volume: mapExpectedVolume(formData.expectedVolume),
+    industry_id: formData.industryId,
+    // Convert empty strings to null for optional fields and ensure limits
     phone: formData.phone === '' ? undefined : formData.phone,
     website: formData.website === '' ? undefined : formData.website,
-    comments: formData.comments === '' ? undefined : formData.comments,
+    comments: !formData.comments || formData.comments === '' ? undefined : 
+              formData.comments.length > 500 ? formData.comments.substring(0, 500) : formData.comments,
     // Add additional tracking data
-    utmSource: additionalData?.utmSource || undefined,
-    utmMedium: additionalData?.utmMedium || undefined,
-    utmCampaign: additionalData?.utmCampaign || undefined,
-    referralSource: additionalData?.referralSource || undefined,
+    utm_source: additionalData?.utmSource || undefined,
+    utm_medium: additionalData?.utmMedium || undefined,
+    utm_campaign: additionalData?.utmCampaign || undefined,
+    referral_source: additionalData?.referralSource || undefined,
   };
 };
 

@@ -239,9 +239,48 @@ export async function POST(request: NextRequest) {
     // Send email notifications (async, non-blocking)
     // Note: We don't await these to avoid blocking the response
     try {
+      // Get industry name for email
+      const { industriesService } = await import('../../../lib/supabase');
+      const industriesResult = await industriesService.getActiveIndustries();
+      
+      let industryName = 'No especificada';
+      if (industriesResult.data && !industriesResult.error) {
+        const industry = industriesResult.data.find(ind => ind.id === validData.industry_id);
+        industryName = industry?.name || 'No especificada';
+      }
+
+      // Map values to user-friendly text
+      const companySizeMap: Record<string, string> = {
+        '1-10': 'Startup (1-10 empleados)',
+        '11-50': 'Pequeña (11-50 empleados)',
+        '51-200': 'Mediana (51-200 empleados)',
+        '201-500': 'Grande (201-500 empleados)',
+        '500+': 'Empresa (500+ empleados)'
+      };
+
+      const chatbotTypeMap: Record<string, string> = {
+        'customer_service': 'Atención al cliente',
+        'sales': 'Ventas',
+        'lead_generation': 'Generación de leads',
+        'internal_operations': 'Operaciones internas',
+        'other': 'Otro'
+      };
+
+      const expectedVolumeMap: Record<string, string> = {
+        '<100': 'Bajo (menos de 100 mensajes/mes)',
+        '100-500': 'Medio (100-500 mensajes/mes)',
+        '500-1000': 'Alto (500-1,000 mensajes/mes)',
+        '1000-5000': 'Muy alto (1,000-5,000 mensajes/mes)',
+        '5000+': 'Extremo (más de 5,000 mensajes/mes)'
+      };
+
       // Prepare email data
       const emailData = {
         ...validData,
+        industry: industryName,
+        company_size: companySizeMap[validData.company_size] || validData.company_size,
+        chatbot_type: chatbotTypeMap[validData.chatbot_type] || validData.chatbot_type,
+        expected_volume: expectedVolumeMap[validData.expected_volume] || validData.expected_volume,
         user_ip: clientIP,
         created_at: insertResult.data.created_at
       };
