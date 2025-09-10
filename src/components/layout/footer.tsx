@@ -130,39 +130,11 @@ export function Footer() {
           </motion.div>
         </div>
 
-        {/* Newsletter Subscription */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="border-t border-border/20 pt-12 mb-12"
-        >
-          <div className="max-w-2xl mx-auto text-center">
-            <h3 className="text-2xl font-bold text-foreground mb-4">
-              Mantente actualizado
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              Recibe las últimas actualizaciones sobre el desarrollo de NeurAnt y sé el primero en conocer nuevas funcionalidades.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="tu@email.com"
-                className="flex-1 px-4 py-3 rounded-full border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-              />
-              <button className="bg-gradient-to-r from-primary to-orange-600 hover:from-orange-600 hover:to-primary text-primary-foreground px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105">
-                Suscribirme
-              </button>
-            </div>
-          </div>
-        </motion.div>
-
         {/* Bottom Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
           className="border-t border-border/20 pt-8"
         >
