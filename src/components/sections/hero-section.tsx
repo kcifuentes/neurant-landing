@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
+import { NeurAntLogo } from '@/components/ui/neurant-logo'
 import { ArrowRight, Bot, Users, Building, Sparkles, MessageCircle, Zap, Globe } from 'lucide-react'
 import { PlexusBackground } from '@/components/ui/plexus-background'
 import { 
@@ -185,7 +186,7 @@ export function HeroSection() {
                     <Bot className="w-8 h-8 text-white" style={{ filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.8))' }} />
                   </div>
                   <div>
-                    <span className="text-white text-2xl font-black tracking-wide" style={{ textShadow: '0 0 20px rgba(255,255,255,0.8)' }}>NeurAnt AI</span>
+                    <span className="text-white text-2xl font-black tracking-wide" style={{ textShadow: '0 0 20px rgba(255,255,255,0.8)' }}><NeurAntLogo fontSize="1.5rem" isDarkBackground={true} className="inline" /> AI</span>
                     <div className="flex items-center space-x-2 mt-2">
                       <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50" />
                       <span className="text-green-400 text-lg font-semibold">En línea • Ultra Activo</span>
@@ -240,7 +241,7 @@ export function HeroSection() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 3, duration: 0.6 }}
                 >
-                  <span className="text-white text-base font-semibold">NeurAnt está revolucionando</span>
+                  <span className="text-white text-base font-semibold"><NeurAntLogo fontSize="1rem" isDarkBackground={true} className="inline" /> está revolucionando</span>
                   <div className="flex space-x-2">
                     <div className="w-3 h-3 bg-orange-400 rounded-full animate-bounce shadow-lg shadow-orange-400/50" />
                     <div className="w-3 h-3 bg-orange-400 rounded-full animate-bounce shadow-lg shadow-orange-400/50" style={{ animationDelay: '0.15s' }} />
@@ -346,7 +347,7 @@ export function HeroSection() {
                       `
                     }}
                   >
-                    NeurAnt
+                    <NeurAntLogo fontSize="clamp(1.875rem, 8vw, 4.5rem)" isDarkBackground={true} className="inline" />
                   </span>
                 </span>
               </motion.div>
@@ -532,7 +533,7 @@ export function HeroSection() {
                 style={{ textShadow: '0 0 20px rgba(255, 255, 255, 0.3)' }}
               >
                 Empresas de <span className="font-bold text-orange-200">vanguardia</span> ya están transformando 
-                su atención al cliente con <span className="font-bold text-white">NeurAnt</span>
+                su atención al cliente con <span className="font-bold text-white"><NeurAntLogo fontSize="clamp(1.5rem, 4vw, 1.875rem)" isDarkBackground={true} className="inline" /></span>
               </motion.p>
             </div>
             

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Bot, Mail, MapPin } from 'lucide-react'
 import { FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa'
+import { NeurAntLogo } from '@/components/ui/neurant-logo'
 
 const productLinks = [
   { name: 'Características', href: '#features' },
@@ -67,9 +68,7 @@ export function Footer() {
                 <Bot className="h-8 w-8 text-orange-400" />
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-orange-400 to-red-400 rounded-full animate-pulse" />
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent">
-                NeurAnt
-              </span>
+              <NeurAntLogo fontSize="1.5rem" isDarkBackground={true} />
             </div>
             <p className="text-slate-300 text-lg mb-6 max-w-md">
               La plataforma de chatbots inteligentes que revoluciona la atención al cliente con IA avanzada y integración perfecta.
@@ -142,7 +141,7 @@ export function Footer() {
           <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
             {/* Copyright */}
             <div className="text-slate-400 text-sm">
-              © {currentYear} NeurAnt. Todos los derechos reservados.
+              © {currentYear} <NeurAntLogo fontSize="0.875rem" isDarkBackground={true} />. Todos los derechos reservados.
             </div>
 
             {/* Legal Links */}

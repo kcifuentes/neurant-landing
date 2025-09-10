@@ -262,6 +262,13 @@
     white-space: nowrap;
     border: 0;
   }
+
+  /* Baumans font utility class for NeurAnt brand */
+  .font-baumans {
+    font-family: var(--font-baumans), system-ui, sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
 }
 
 @keyframes float {

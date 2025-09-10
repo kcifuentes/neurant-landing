@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
+import { NeurAntLogo } from '@/components/ui/neurant-logo'
 import { Bot, Menu } from 'lucide-react'
 
 const navigationItems = [
@@ -69,9 +70,7 @@ export function Header() {
               <Bot className="h-8 w-8 text-primary" />
               <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-orange-400 to-red-400 rounded-full animate-pulse" />
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-primary to-orange-600 bg-clip-text text-transparent">
-              NeurAnt
-            </span>
+            <NeurAntLogo fontSize="1.5rem" isDarkBackground={false} />
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -127,9 +126,7 @@ export function Header() {
                         <Bot className="h-7 w-7 text-primary" />
                         <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-gradient-to-r from-orange-400 to-red-400 rounded-full animate-pulse" />
                       </div>
-                      <span className="text-xl font-bold bg-gradient-to-r from-primary to-orange-600 bg-clip-text text-transparent">
-                        NeurAnt
-                      </span>
+                      <NeurAntLogo fontSize="1.25rem" isDarkBackground={false} />
                     </div>
                   </div>
 
