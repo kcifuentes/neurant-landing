@@ -165,7 +165,7 @@ export function useWaitlistForm(): UseWaitlistFormReturn {
       } catch (error) {
         console.error('Validation error:', error);
         if (error instanceof Error && 'issues' in error) {
-          const issues = (error as any).issues;
+          const issues = (error as { issues: Array<{ path: string[]; message: string }> }).issues;
           console.error('Validation issues:', issues);
           
           // Show specific validation errors via toast
@@ -295,7 +295,7 @@ export function useWaitlistForm(): UseWaitlistFormReturn {
           description: 'Verifica tu conexión a internet e intenta de nuevo',
           duration: 6000,
         });
-      } else if (!error instanceof Error || !error.message.includes('servidor')) {
+      } else if (!(error instanceof Error) || !error.message.includes('servidor')) {
         // Don't show toast for server errors (already handled above)
         toast.error('Error inesperado', {
           description: errorMessage,
