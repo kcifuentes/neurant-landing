@@ -1,5 +1,6 @@
 import { HeroSection } from '@/components/sections/hero-section'
 import { FeaturesSection } from '@/components/sections/features-section'
+import { ExpectativaMomentumSection } from '@/components/sections/expectativa-momentum-section'
 import { WaitlistSection } from '@/components/sections/waitlist-section'
 
 export default function Home() {
@@ -7,7 +8,10 @@ export default function Home() {
     <div className="min-h-screen">
       <HeroSection />
       <FeaturesSection />
-      <WaitlistSection />
+      <ExpectativaMomentumSection />
+      <div id="waitlist-section">
+        <WaitlistSection />
+      </div>
     </div>
   );
 }
