@@ -1,4 +1,4 @@
-import { HeroSection } from '@/components/sections/hero-section'
+import { NewHeroSection } from '@/components/sections/new-hero-section'
 import { FeaturesSection } from '@/components/sections/features-section'
 import { IntegrationsSection } from '@/components/sections/integrations-section'
 import { SeparatorSection } from '@/components/sections/separator-section'
@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <section id="hero">
-        <HeroSection />
+        <NewHeroSection />
       </section>
       <section id="features">
         <FeaturesSection />

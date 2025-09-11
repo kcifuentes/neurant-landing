@@ -70,6 +70,32 @@ export const parallaxVariants: Variants = {
   }
 }
 
+export const tabletFloatingVariants: Variants = {
+  animate: {
+    y: [-15, 15],
+    x: [-3, 3], 
+    rotate: [-0.5, 0.5],
+    transition: {
+      duration: 8,
+      repeat: Infinity,
+      repeatType: "reverse",
+      ease: "easeInOut"
+    }
+  }
+}
+
+export const tabletParallaxVariants: Variants = {
+  animate: {
+    y: [-30, 30],
+    transition: {
+      duration: 10,
+      repeat: Infinity, 
+      repeatType: "reverse",
+      ease: "easeInOut"
+    }
+  }
+}
+
 export const magneticHoverVariants: Variants = {
   hover: {
     scale: 1.05,

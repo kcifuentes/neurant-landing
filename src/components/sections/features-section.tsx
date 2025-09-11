@@ -165,24 +165,24 @@ export function FeaturesSection() {
         </motion.div>
 
         {/* Features Grid */}
-        <motion.div
-          variants={staggerContainerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOptions}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-20">
           {features.map((feature, index) => {
             const IconComponent = feature.icon
             return (
-              <motion.div key={index} variants={glassCardVariants}>
+              <motion.div 
+                key={index} 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: false, margin: "-100px", amount: 0.1 }}
+              >
                 <motion.div
                   whileHover="hover"
                   variants={magneticHoverVariants}
                   className="group cursor-pointer"
                 >
-                  <Card className="p-8 h-full bg-white/60 dark:bg-gray-900/40 backdrop-blur-xl border-white/60 dark:border-gray-700/60 hover:bg-white/80 dark:hover:bg-gray-900/60 transition-all duration-500 group shadow-2xl hover:shadow-orange-500/10 dark:hover:shadow-orange-500/5">
-                    <div className="text-center space-y-6">
+                  <Card className="p-6 sm:p-8 h-full bg-white/60 dark:bg-gray-900/40 backdrop-blur-xl border-white/60 dark:border-gray-700/60 hover:bg-white/80 dark:hover:bg-gray-900/60 transition-all duration-500 group shadow-2xl hover:shadow-orange-500/10 dark:hover:shadow-orange-500/5">
+                    <div className="text-center space-y-4 sm:space-y-6">
                       {/* Icon */}
                       <motion.div
                         whileHover={{ 
@@ -190,17 +190,17 @@ export function FeaturesSection() {
                           rotate: [0, -5, 5, 0],
                           transition: { duration: 0.4 }
                         }}
-                        className={`inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br ${feature.color} text-white shadow-2xl shadow-orange-500/25 group-hover:shadow-3xl group-hover:shadow-orange-500/40 transition-all duration-500`}
+                        className={`inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl sm:rounded-3xl bg-gradient-to-br ${feature.color} text-white shadow-2xl shadow-orange-500/25 group-hover:shadow-3xl group-hover:shadow-orange-500/40 transition-all duration-500`}
                       >
-                        <IconComponent className="w-10 h-10" />
+                        <IconComponent className="w-8 h-8 sm:w-10 sm:h-10" />
                       </motion.div>
 
                       {/* Content */}
-                      <div className="space-y-4">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300">
+                      <div className="space-y-3 sm:space-y-4">
+                        <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300">
                           {feature.title}
                         </h3>
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
+                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-base sm:text-lg">
                           {feature.description}
                         </p>
                       </div>
@@ -217,7 +217,7 @@ export function FeaturesSection() {
               </motion.div>
             )
           })}
-        </motion.div>
+        </div>
 
         {/* Call to Action */}
         <motion.div

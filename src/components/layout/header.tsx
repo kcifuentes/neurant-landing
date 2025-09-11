@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 import { NeurAntLogo } from '@/components/ui/neurant-logo'
-import { Bot, Menu } from 'lucide-react'
+import { Menu } from 'lucide-react'
 
 const navigationItems = [
   { name: 'Inicio', href: '#hero' },
@@ -61,16 +61,12 @@ export function Header() {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <motion.div 
-            className="flex items-center space-x-3 cursor-pointer"
+            className="cursor-pointer"
             onClick={() => scrollToSection('#hero')}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="relative">
-              <Bot className="h-8 w-8 text-primary" />
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-orange-400 to-red-400 rounded-full animate-pulse" />
-            </div>
-            <NeurAntLogo fontSize="1.5rem" isDarkBackground={false} />
+            <NeurAntLogo fontSize="1.75rem" isDarkBackground={false} />
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -121,12 +117,8 @@ export function Header() {
                 <div className="flex flex-col h-full">
                   {/* Mobile Header */}
                   <div className="flex items-center justify-between py-6 border-b border-border/20">
-                    <div className="flex items-center space-x-3">
-                      <div className="relative">
-                        <Bot className="h-7 w-7 text-primary" />
-                        <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-gradient-to-r from-orange-400 to-red-400 rounded-full animate-pulse" />
-                      </div>
-                      <NeurAntLogo fontSize="1.25rem" isDarkBackground={false} />
+                    <div>
+                      <NeurAntLogo fontSize="1.5rem" isDarkBackground={false} />
                     </div>
                   </div>
 
