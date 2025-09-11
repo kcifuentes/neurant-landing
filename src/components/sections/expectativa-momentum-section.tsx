@@ -156,10 +156,10 @@ export function ExpectativaMomentumSection() {
   ]
 
   return (
-    <section className="relative py-24 bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 overflow-hidden">
+    <section className="relative py-24 bg-gradient-to-br from-slate-50 via-orange-50/30 to-red-50/20 overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] -z-10" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-blue-200/20 via-purple-200/10 to-transparent rounded-full blur-3xl -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-orange-200/20 via-red-200/10 to-transparent rounded-full blur-3xl -z-10" />
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
@@ -171,13 +171,13 @@ export function ExpectativaMomentumSection() {
         >
           {/* Header */}
           <motion.div variants={itemVariants} className="text-center mb-16">
-            <Badge variant="outline" className="mb-4 bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
+            <Badge variant="outline" className="mb-4 bg-gradient-to-r from-orange-50 to-red-50 border-orange-200">
               <Rocket className="w-4 h-4 mr-2" />
               Próximo Lanzamiento
             </Badge>
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Únete al{' '}
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-orange-600 via-red-600 to-orange-800 bg-clip-text text-transparent">
                 Futuro
               </span>{' '}
               de la Atención al Cliente
@@ -190,13 +190,13 @@ export function ExpectativaMomentumSection() {
 
           {/* Countdown Timer */}
           <motion.div variants={itemVariants} className="mb-16">
-            <Card className="p-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
+            <Card className="p-8 bg-gradient-to-r from-orange-500 to-red-500 text-white border-0">
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-bold mb-2 flex items-center justify-center gap-2">
                   <Clock className="w-6 h-6" />
                   Lanzamiento en Octubre 2025
                 </h3>
-                <p className="text-blue-100">Acceso temprano limitado - Regístrate ahora</p>
+                <p className="text-orange-100">Acceso temprano limitado - Regístrate ahora</p>
               </div>
               
               <div className="grid grid-cols-4 gap-4 text-center">
@@ -212,7 +212,7 @@ export function ExpectativaMomentumSection() {
                     className="bg-white/10 backdrop-blur-sm rounded-lg p-4"
                   >
                     <div className="text-3xl md:text-4xl font-bold">{time.value}</div>
-                    <div className="text-sm text-blue-100">{time.label}</div>
+                    <div className="text-sm text-orange-100">{time.label}</div>
                   </motion.div>
                 ))}
               </div>
@@ -222,10 +222,10 @@ export function ExpectativaMomentumSection() {
           {/* Stats Grid */}
           <motion.div variants={itemVariants} className="grid md:grid-cols-3 gap-8 mb-16">
             {/* Registrations */}
-            <Card className="p-6 text-center bg-white/70 backdrop-blur-sm border-blue-100 hover:shadow-lg transition-all duration-300">
+            <Card className="p-6 text-center bg-white/70 backdrop-blur-sm border-orange-100 hover:shadow-lg transition-all duration-300">
               <motion.div
                 variants={countVariants}
-                className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4"
+                className="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4"
               >
                 <Users className="w-8 h-8 text-white" />
               </motion.div>
@@ -246,10 +246,10 @@ export function ExpectativaMomentumSection() {
             </Card>
 
             {/* Countries */}
-            <Card className="p-6 text-center bg-white/70 backdrop-blur-sm border-purple-100 hover:shadow-lg transition-all duration-300">
+            <Card className="p-6 text-center bg-white/70 backdrop-blur-sm border-red-100 hover:shadow-lg transition-all duration-300">
               <motion.div
                 variants={countVariants}
-                className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4"
+                className="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4"
               >
                 <Globe className="w-8 h-8 text-white" />
               </motion.div>
@@ -263,7 +263,7 @@ export function ExpectativaMomentumSection() {
                 {stats.countries_represented}+
               </motion.div>
               <p className="text-gray-600">Países representados</p>
-              <Badge variant="outline" className="mt-3 bg-blue-50 text-blue-700 border-blue-200">
+              <Badge variant="outline" className="mt-3 bg-orange-50 text-orange-700 border-orange-200">
                 <Globe className="w-3 h-3 mr-1" />
                 Expansión LATAM
               </Badge>
@@ -314,7 +314,7 @@ export function ExpectativaMomentumSection() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <Badge variant="outline" className="px-4 py-2 bg-white/70 border-gray-200 hover:border-blue-300 transition-colors">
+                  <Badge variant="outline" className="px-4 py-2 bg-white/70 border-gray-200 hover:border-orange-300 transition-colors">
                     {industry.name} ({industry.registrations})
                   </Badge>
                 </motion.div>
@@ -341,7 +341,7 @@ export function ExpectativaMomentumSection() {
                   >
                     <div className={`w-3 h-3 rounded-full ${
                       milestone.status === 'completed' ? 'bg-green-500' :
-                      milestone.status === 'in-progress' ? 'bg-blue-500' :
+                      milestone.status === 'in-progress' ? 'bg-orange-500' :
                       'bg-gray-300'
                     }`} />
                     
@@ -357,7 +357,7 @@ export function ExpectativaMomentumSection() {
                       <CheckCircle2 className="w-5 h-5 text-green-500" />
                     )}
                     {milestone.status === 'in-progress' && (
-                      <Zap className="w-5 h-5 text-blue-500" />
+                      <Zap className="w-5 h-5 text-orange-500" />
                     )}
                     {milestone.status === 'upcoming' && (
                       <Calendar className="w-5 h-5 text-gray-400" />
@@ -370,27 +370,27 @@ export function ExpectativaMomentumSection() {
 
           {/* CTA Section */}
           <motion.div variants={itemVariants} className="text-center">
-            <Card className="p-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0">
+            <Card className="p-8 bg-gradient-to-r from-orange-500 to-red-500 text-white border-0">
               <h3 className="text-2xl font-bold mb-4">
                 El futuro llega en Octubre 2025
               </h3>
-              <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+              <p className="text-orange-100 mb-6 max-w-2xl mx-auto">
                 Acceso temprano limitado. Las primeras 500 empresas obtendrán características exclusivas 
                 y precios preferenciales de por vida.
               </p>
               
               <Button 
                 size="lg" 
-                className="bg-white text-blue-600 hover:bg-blue-50 transition-all duration-300 transform hover:scale-105"
+                className="bg-white text-orange-600 hover:bg-orange-50 transition-all duration-300 transform hover:scale-105"
                 onClick={() => {
-                  document.getElementById('waitlist-section')?.scrollIntoView({ behavior: 'smooth' })
+                  document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })
                 }}
               >
                 Asegurar mi lugar
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               
-              <p className="text-xs text-blue-200 mt-4">
+              <p className="text-xs text-orange-200 mt-4">
                 Sin compromiso • Cancela cuando quieras • Acceso prioritario garantizado
               </p>
             </Card>

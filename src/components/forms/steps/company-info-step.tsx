@@ -105,13 +105,13 @@ export function CompanyInfoStep({ form, formattedPhone, setFormattedPhone }: Com
                 </FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="h-12 px-4 bg-slate-800/50 border-slate-600/50 text-white focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 rounded-xl transition-all duration-300">
-                      <SelectValue placeholder="Selecciona el tamaño" className="text-slate-400" />
+                    <SelectTrigger className="h-12 px-4 bg-slate-800/50 border-slate-600/50 text-white data-[placeholder]:text-slate-400 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 rounded-xl transition-all duration-300">
+                      <SelectValue placeholder="Selecciona el tamaño" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="bg-slate-800 border-slate-600">
                     {COMPANY_SIZE_OPTIONS.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
+                      <SelectItem key={option.value} value={option.value} className="text-white hover:bg-slate-700 focus:bg-slate-700">
                         {option.label}
                       </SelectItem>
                     ))}
@@ -136,11 +136,11 @@ export function CompanyInfoStep({ form, formattedPhone, setFormattedPhone }: Com
                 </FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="h-12 px-4 bg-slate-800/50 border-slate-600/50 text-white focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 rounded-xl transition-all duration-300">
-                      <SelectValue placeholder="Selecciona tu industria" className="text-slate-400" />
+                    <SelectTrigger className="h-12 px-4 bg-slate-800/50 border-slate-600/50 text-white data-[placeholder]:text-slate-400 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 rounded-xl transition-all duration-300">
+                      <SelectValue placeholder="Selecciona tu industria" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="bg-slate-800 border-slate-600">
                     {loadingIndustries ? (
                       <div className="flex items-center justify-center py-4">
                         <Loader2 className="h-4 w-4 animate-spin text-orange-400" />
@@ -152,7 +152,7 @@ export function CompanyInfoStep({ form, formattedPhone, setFormattedPhone }: Com
                       </div>
                     ) : industries.length > 0 ? (
                       industries.map((industry) => (
-                        <SelectItem key={industry.id} value={industry.id}>
+                        <SelectItem key={industry.id} value={industry.id} className="text-white hover:bg-slate-700 focus:bg-slate-700">
                           {industry.name}
                         </SelectItem>
                       ))

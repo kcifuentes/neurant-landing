@@ -132,13 +132,27 @@ class EmailQueue {
     let text = template.text || '';
     let subject = template.subject;
 
-    // Simple template variable replacement
+    // Enhanced template variable replacement with better null handling
     for (const [key, value] of Object.entries(data)) {
       const placeholder = `{{${key}}}`;
-      html = html.replace(new RegExp(placeholder, 'g'), String(value));
-      text = text.replace(new RegExp(placeholder, 'g'), String(value));
-      subject = subject.replace(new RegExp(placeholder, 'g'), String(value));
+      const safeValue = value !== null && value !== undefined ? String(value) : '';
+      
+      // Use global regex replacement
+      html = html.replace(new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), safeValue);
+      text = text.replace(new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), safeValue);
+      subject = subject.replace(new RegExp(placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), safeValue);
     }
+
+    // Log data being sent for debugging
+    console.log('[EmailService] Sending email with data:', {
+      to,
+      dataKeys: Object.keys(data),
+      sampleData: {
+        phone: data.phone,
+        website: data.website,
+        comments: data.comments
+      }
+    });
 
     await resend.emails.send({
       from: process.env.EMAIL_FROM || 'NeurAnt <no-reply@notifications.innovarting.com>',

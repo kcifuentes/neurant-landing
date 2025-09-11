@@ -42,12 +42,12 @@ const waitlistSchema = z.object({
   country: z
     .string()
     .min(2, 'País es requerido')
-    .max(50, 'Nombre de país demasiado largo')
+    .max(100, 'Nombre de país demasiado largo')
     .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s-]+$/, 'País contiene caracteres no válidos')
     .transform(val => val.trim()),
   company_size: z
-    .enum(['1-10', '11-50', '51-200', '201-500', '500+'])
-    .refine(val => ['1-10', '11-50', '51-200', '201-500', '500+'].includes(val), {
+    .enum(['1-10', '11-50', '51-200', '201-1000', '1000+'])
+    .refine(val => ['1-10', '11-50', '51-200', '201-1000', '1000+'].includes(val), {
       message: 'Tamaño de empresa no válido'
     }),
   expected_volume: z
@@ -60,6 +60,18 @@ const waitlistSchema = z.object({
     .refine(val => ['customer_service', 'sales', 'lead_generation', 'internal_operations', 'other'].includes(val), {
       message: 'Tipo de chatbot no válido'
     }),
+  phone: z
+    .string()
+    .max(20, 'Teléfono demasiado largo')
+    .optional()
+    .nullable()
+    .transform(val => val?.trim() || null),
+  website: z
+    .string()
+    .max(255, 'Website demasiado largo')
+    .optional()
+    .nullable()
+    .transform(val => val?.trim() || null),
   comments: z
     .string()
     .max(500, 'Comentarios demasiado largos')
@@ -209,8 +221,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Prepare data for database insertion
+    const dbData = {
+      ...validData,
+      ip_address: clientIP,
+      user_agent: request.headers.get('user-agent') || null,
+      // Ensure optional fields are properly handled
+      phone: validData.phone || null,
+      website: validData.website || null,
+      comments: validData.comments || null
+    };
+
+    console.log(`[${requestId}] Database data prepared:`, {
+      ...sanitizeForLogging(dbData),
+      hasPhone: !!dbData.phone,
+      hasWebsite: !!dbData.website,
+      hasComments: !!dbData.comments
+    });
+
     // Add to waitlist
-    const insertResult = await waitlistService.addEntry(validData);
+    const insertResult = await waitlistService.addEntry(dbData);
     if (insertResult.error || !insertResult.data) {
       console.error(`[${requestId}] Error adding entry to waitlist:`, insertResult.error);
       return NextResponse.json(
@@ -254,8 +284,8 @@ export async function POST(request: NextRequest) {
         '1-10': 'Startup (1-10 empleados)',
         '11-50': 'Pequeña (11-50 empleados)',
         '51-200': 'Mediana (51-200 empleados)',
-        '201-500': 'Grande (201-500 empleados)',
-        '500+': 'Empresa (500+ empleados)'
+        '201-1000': 'Grande (201-1000 empleados)',
+        '1000+': 'Empresa (1000+ empleados)'
       };
 
       const chatbotTypeMap: Record<string, string> = {
@@ -274,16 +304,25 @@ export async function POST(request: NextRequest) {
         '5000+': 'Extremo (más de 5,000 mensajes/mes)'
       };
 
-      // Prepare email data
+      // Prepare email data with proper handling of optional fields
       const emailData = {
         ...validData,
         industry: industryName,
         company_size: companySizeMap[validData.company_size] || validData.company_size,
         chatbot_type: chatbotTypeMap[validData.chatbot_type] || validData.chatbot_type,
         expected_volume: expectedVolumeMap[validData.expected_volume] || validData.expected_volume,
+        // Ensure optional fields have proper values
+        phone: validData.phone || 'No proporcionado',
+        website: validData.website || 'No proporcionado',
+        comments: validData.comments || 'Sin comentarios adicionales',
         user_ip: clientIP,
         created_at: insertResult.data.created_at
       };
+
+      console.log(`[${requestId}] Email data prepared:`, {
+        ...emailData,
+        email: emailData.email.replace(/(.{2}).*(@.*)/, '$1***$2') // Mask email for logging
+      });
 
       // Send welcome email to user
       const welcomeJobId = await EmailService.sendWelcomeEmail(emailData);

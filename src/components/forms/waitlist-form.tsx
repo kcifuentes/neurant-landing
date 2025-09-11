@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Loader2, CheckCircle, AlertCircle, Check } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useWaitlistForm, type FormStep } from '@/hooks/use-waitlist-form';
 import { BasicInfoStep } from './steps/basic-info-step';
@@ -87,7 +87,7 @@ export function WaitlistForm({ className, onSuccess }: WaitlistFormProps) {
         className="w-full max-w-2xl mx-auto"
       >
         <div className="shadow-xl hover:shadow-2xl transition-shadow duration-300">
-          <Card className="bg-gradient-to-br from-slate-900/95 to-slate-800/95 backdrop-blur-xl border border-slate-700/50 relative overflow-hidden">
+          <Card className="bg-gradient-to-br from-slate-900/95 to-slate-800/95 backdrop-blur-xl border border-slate-700/50 relative overflow-hidden pt-0 pb-6">
             {/* Premium Floating Particles */}
             <div className="absolute inset-0 pointer-events-none">
               {[...Array(6)].map((_, i) => (
@@ -112,7 +112,7 @@ export function WaitlistForm({ className, onSuccess }: WaitlistFormProps) {
               ))}
             </div>
             
-        <CardHeader className="text-center space-y-6 relative">
+        <CardHeader className="text-center space-y-4 pt-0 pb-6 relative">
           {/* Premium Background Effects */}
           <div className="absolute inset-0 bg-gradient-to-br from-orange-400/10 to-red-500/10 rounded-t-lg pointer-events-none" />
           <motion.div 
@@ -140,7 +140,7 @@ export function WaitlistForm({ className, onSuccess }: WaitlistFormProps) {
             }}
           />
           
-          <div className="relative space-y-3">
+          <div className="relative space-y-3 pt-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -251,13 +251,13 @@ export function WaitlistForm({ className, onSuccess }: WaitlistFormProps) {
                     }
                   `}>
                     {isCompleted ? (
-                      <motion.span
+                      <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        className="text-lg"
+                        className="flex items-center justify-center"
                       >
-                        ✓
-                      </motion.span>
+                        <Check className="w-4 h-4" />
+                      </motion.div>
                     ) : (
                       <span>{index + 1}</span>
                     )}
@@ -291,7 +291,7 @@ export function WaitlistForm({ className, onSuccess }: WaitlistFormProps) {
           </motion.h3>
         </CardHeader>
 
-        <CardContent className="space-y-8 relative">
+        <CardContent className="space-y-8 pb-6 pt-0 relative">
           {/* Content Background Effects */}
           <div className="absolute inset-0 bg-gradient-to-b from-slate-800/20 to-slate-900/20 rounded-b-lg pointer-events-none" />
           {/* Premium Error Message */}

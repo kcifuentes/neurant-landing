@@ -146,7 +146,7 @@ export function FeaturesSection() {
             className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-8 leading-tight"
           >
             Todo lo que necesitas para{' '}
-            <span className="bg-gradient-to-r from-orange-500 via-orange-600 to-red-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-orange-500 via-orange-600 to-red-500 bg-clip-text text-transparent whitespace-nowrap">
               automatizar
             </span>{' '}
             tu atención al cliente
@@ -179,7 +179,7 @@ export function FeaturesSection() {
                 <motion.div
                   whileHover="hover"
                   variants={magneticHoverVariants}
-                  className="group"
+                  className="group cursor-pointer"
                 >
                   <Card className="p-8 h-full bg-white/60 dark:bg-gray-900/40 backdrop-blur-xl border-white/60 dark:border-gray-700/60 hover:bg-white/80 dark:hover:bg-gray-900/60 transition-all duration-500 group shadow-2xl hover:shadow-orange-500/10 dark:hover:shadow-orange-500/5">
                     <div className="text-center space-y-6">

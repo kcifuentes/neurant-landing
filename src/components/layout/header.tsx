@@ -79,7 +79,7 @@ export function Header() {
               <motion.button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className="relative text-muted-foreground hover:text-foreground transition-colors duration-200 font-medium"
+                className="relative text-muted-foreground hover:text-foreground transition-colors duration-200 font-medium cursor-pointer"
                 whileHover={{ y: -2 }}
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -137,7 +137,7 @@ export function Header() {
                         <motion.button
                           key={item.name}
                           onClick={() => scrollToSection(item.href)}
-                          className="flex items-center w-full text-left text-lg font-medium text-muted-foreground hover:text-foreground transition-colors duration-200"
+                          className="flex items-center w-full text-left text-lg font-medium text-muted-foreground hover:text-foreground transition-colors duration-200 cursor-pointer"
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.1 }}

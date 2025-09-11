@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 import { NeurAntLogo } from '@/components/ui/neurant-logo'
-import { ArrowRight, Bot, Users, Building, Sparkles, MessageCircle, Zap, Globe } from 'lucide-react'
+import { ArrowRight, Bot, Users, Sparkles, MessageCircle, Zap, Globe, Rocket } from 'lucide-react'
 import { PlexusBackground } from '@/components/ui/plexus-background'
 import { 
   staggerContainerVariants, 
@@ -224,7 +224,9 @@ export function HeroSection() {
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent rounded-3xl" />
                     <div className="relative">
-                      <span className="text-lg font-medium">¡Perfecto! 🚀 Implemento soluciones que:</span>
+                      <span className="text-lg font-medium flex items-center gap-2">
+                        ¡Perfecto! <Rocket className="w-5 h-5 text-orange-400" /> Implemento soluciones que:
+                      </span>
                       <ul className="mt-3 text-base space-y-2 opacity-95">
                         <li className="flex items-center"><span className="w-2 h-2 bg-green-400 rounded-full mr-3 shadow-lg shadow-green-400/50"></span>Reducen costos 80%+</li>
                         <li className="flex items-center"><span className="w-2 h-2 bg-blue-400 rounded-full mr-3 shadow-lg shadow-blue-400/50"></span>Atienden 24/7 sin parar</li>
@@ -441,7 +443,7 @@ export function HeroSection() {
             {/* ULTRA DRAMATIC Stats Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mt-12 sm:mt-16">
               <motion.div 
-                className="relative group"
+                className="relative group cursor-pointer"
                 variants={fadeInUpVariants}
                 whileHover={{ scale: 1.05, y: -5 }}
               >
@@ -453,7 +455,7 @@ export function HeroSection() {
               </motion.div>
               
               <motion.div 
-                className="relative group"
+                className="relative group cursor-pointer"
                 variants={fadeInUpVariants}
                 whileHover={{ scale: 1.05, y: -5 }}
               >
@@ -465,7 +467,7 @@ export function HeroSection() {
               </motion.div>
               
               <motion.div 
-                className="relative group"
+                className="relative group cursor-pointer"
                 variants={fadeInUpVariants}
                 whileHover={{ scale: 1.05, y: -5 }}
               >
@@ -488,30 +490,18 @@ export function HeroSection() {
               >
                 <Button 
                   size="lg" 
+                  onClick={() => {
+                    document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })
+                  }}
                   className="text-lg sm:text-xl lg:text-2xl px-8 sm:px-12 lg:px-16 py-6 sm:py-8 lg:py-10 h-auto bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400 text-white font-black shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl sm:rounded-3xl border-0"
-                  aria-label="Probar NeurAnt gratis - Crear cuenta sin costo"
+                  aria-label="Únete a la Lista de Espera de NeurAnt"
                 >
                   <Users className="w-6 h-6 mr-3" />
-                  <span>PROBAR GRATIS</span>
+                  <span>ÚNETE A LA LISTA DE ESPERA</span>
                   <ArrowRight className="w-6 h-6 ml-3" />
                 </Button>
               </motion.div>
               
-              {/* Secondary CTA */}
-              <motion.div
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Button 
-                  variant="outline"
-                  size="lg" 
-                  className="text-lg sm:text-xl lg:text-2xl px-8 sm:px-12 lg:px-16 py-6 sm:py-8 lg:py-10 h-auto bg-white/10 hover:bg-white/20 text-white font-bold border-2 border-white/40 hover:border-white/60 transition-all duration-300 rounded-2xl sm:rounded-3xl shadow-lg hover:shadow-xl"
-                  aria-label="Ver demo de NeurAnt - Demostración en vivo del producto"
-                >
-                  <Bot className="w-6 h-6 mr-3" />
-                  <span>VER DEMO</span>
-                </Button>
-              </motion.div>
             </div>
             
             {/* Ultra Subtle Call to Action Text */}
@@ -542,13 +532,13 @@ export function HeroSection() {
               <motion.div 
                 variants={glassCardVariants} 
                 whileHover={{ scale: 1.08, y: -10 }}
-                className="group"
+                className="group cursor-pointer"
               >
                 <div className="relative">
                   {/* Multiple Glow Effects */}
                   <Card className="p-12 bg-white/20 border-2 border-white/40 hover:border-white/60 shadow-xl hover:shadow-2xl transition-all duration-300 rounded-3xl">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="text-center space-y-6 relative z-10">
+                    <div className="text-center space-y-4 relative z-10 flex flex-col justify-center h-full">
                       <div 
                         className="text-7xl font-black text-white mb-6" 
                         style={{ 
@@ -576,13 +566,13 @@ export function HeroSection() {
               <motion.div 
                 variants={glassCardVariants} 
                 whileHover={{ scale: 1.08, y: -10 }}
-                className="group"
+                className="group cursor-pointer"
               >
                 <div className="relative">
                   
-                  <Card className="relative p-12 bg-white/20 backdrop-blur-sm border-3 border-white/40 hover:border-white/60 shadow-[0_40px_100px_rgba(0,0,0,0.3)] group transition-all duration-700 rounded-[2rem] overflow-hidden">
+                  <Card className="relative p-12 h-80 bg-white/20 backdrop-blur-sm border-3 border-white/40 hover:border-white/60 shadow-[0_40px_100px_rgba(0,0,0,0.3)] group transition-all duration-700 rounded-[2rem] overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="text-center space-y-6 relative z-10">
+                    <div className="text-center space-y-4 relative z-10 flex flex-col justify-center h-full">
                       <div 
                         className="text-7xl font-black text-white mb-6" 
                         style={{ 
@@ -610,18 +600,14 @@ export function HeroSection() {
               <motion.div 
                 variants={glassCardVariants} 
                 whileHover={{ scale: 1.08, y: -10 }}
-                className="group"
+                className="group cursor-pointer"
               >
                 <div className="relative">
                   
-                  <Card className="relative p-12 bg-white/20 backdrop-blur-sm border-3 border-white/40 hover:border-white/60 shadow-[0_40px_100px_rgba(0,0,0,0.3)] group transition-all duration-700 rounded-[2rem] overflow-hidden">
+                  <Card className="relative p-12 h-80 bg-white/20 backdrop-blur-sm border-3 border-white/40 hover:border-white/60 shadow-[0_40px_100px_rgba(0,0,0,0.3)] group transition-all duration-700 rounded-[2rem] overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="text-center space-y-6 relative z-10">
-                      <div className="flex items-center justify-center space-x-4 mb-6">
-                        <Building 
-                          className="w-16 h-16 text-orange-300" 
-                          style={{ filter: 'drop-shadow(0 0 20px rgba(251, 146, 60, 0.8))' }}
-                        />
+                    <div className="text-center space-y-4 relative z-10 flex flex-col justify-center h-full">
+                      <div className="mb-6">
                         <div 
                           className="text-4xl font-black text-white"
                           style={{ 
@@ -631,7 +617,7 @@ export function HeroSection() {
                             ` 
                           }}
                         >
-                          #{stats.topIndustries[0]?.name || 'E-commerce'}
+                          #{stats.topIndustries[0]?.name?.replace('-', '\u2011') || 'E\u2011commerce'}
                         </div>
                       </div>
                       <div className="text-2xl font-bold text-orange-200 tracking-wide">

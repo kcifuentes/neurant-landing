@@ -217,16 +217,12 @@ export function IntegrationsSection() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-xl hover:from-orange-400 hover:to-red-400 transition-all duration-300 shadow-lg hover:shadow-orange-500/25"
+                onClick={() => {
+                  document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })
+                }}
+                className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-xl hover:from-orange-400 hover:to-red-400 transition-all duration-300 shadow-lg hover:shadow-orange-500/25 cursor-pointer"
               >
-                Solicitar Integración
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-slate-700/50 text-white font-semibold rounded-xl hover:bg-slate-600/50 transition-all duration-300 border border-slate-600/50"
-              >
-                Ver Documentación
+                Únete a la Lista de Espera
               </motion.button>
             </div>
           </div>

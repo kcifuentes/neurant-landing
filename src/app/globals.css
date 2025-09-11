@@ -132,6 +132,23 @@
     overflow-wrap: break-word;
     hyphens: auto;
   }
+
+  /* Cursor pointer for clickable elements */
+  button,
+  [role="button"],
+  [data-clickable="true"],
+  .clickable,
+  a:not([disabled]),
+  [tabindex]:not([tabindex="-1"]),
+  [onClick] {
+    cursor: pointer;
+  }
+  
+  /* Disabled elements should not have pointer cursor */
+  button:disabled,
+  [disabled] {
+    cursor: not-allowed;
+  }
 }
 
 @layer utilities {
@@ -266,6 +283,13 @@
   /* Baumans font utility class for NeurAnt brand */
   .font-baumans {
     font-family: var(--font-baumans), system-ui, sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+  
+  /* Roboto font utility class for main content */
+  .font-roboto {
+    font-family: var(--font-roboto), system-ui, sans-serif;
     font-weight: 400;
     letter-spacing: 0.01em;
   }

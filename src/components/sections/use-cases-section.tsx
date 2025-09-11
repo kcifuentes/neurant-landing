@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { ShoppingCart, Building2, Heart, GraduationCap, Car, Utensils } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { 
   staggerContainerVariants, 
   fadeInUpVariants,
@@ -137,7 +136,7 @@ export function UseCasesSection() {
           <motion.div variants={fadeInUpVariants}>
             <Badge 
               variant="outline" 
-              className="mb-8 px-6 py-3 text-base bg-purple-500/20 border-purple-500/30 text-purple-200 hover:bg-purple-500/30"
+              className="mb-8 px-6 py-3 text-base bg-orange-500/20 border-orange-500/30 text-orange-200 hover:bg-orange-500/30"
             >
               <Building2 className="w-4 h-4 mr-2" />
               Casos de Uso Reales
@@ -150,7 +149,7 @@ export function UseCasesSection() {
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-6 sm:mb-8 leading-tight"
           >
             Transforma cualquier industria
-            <span className="block text-transparent bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text">
+            <span className="block text-transparent bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text">
               con IA especializada
             </span>
           </motion.h2>
@@ -246,43 +245,6 @@ export function UseCasesSection() {
           ))}
         </motion.div>
 
-        {/* Call to Action */}
-        <motion.div
-          variants={fadeInUpVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          className="text-center"
-        >
-          <div className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-xl border border-purple-500/30 rounded-3xl p-12 max-w-4xl mx-auto">
-            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-              ¿No ves tu industria aquí?
-            </h3>
-            <p className="text-slate-300 mb-8 text-lg">
-              NeurAnt es altamente configurable y se adapta a cualquier sector. Cuéntanos tu caso específico 
-              y diseñaremos la solución perfecta para tu negocio.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center sm:items-stretch">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  size="lg"
-                  className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold rounded-xl hover:from-purple-400 hover:to-blue-400 transition-all duration-300 shadow-lg hover:shadow-purple-500/25"
-                >
-                  Consultar Mi Caso
-                </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="px-8 py-4 bg-slate-700/50 text-white font-semibold rounded-xl hover:bg-slate-600/50 transition-all duration-300 border-slate-600/50"
-                >
-                  Ver Más Ejemplos
-                </Button>
-              </motion.div>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   )

@@ -2,14 +2,16 @@
 
 import { motion } from 'framer-motion';
 import { WaitlistForm } from '@/components/forms/waitlist-form';
+import { NeurAntLogo } from '@/components/ui/neurant-logo';
+import { Rocket, Target, Users } from 'lucide-react';
 
 export function WaitlistSection() {
   return (
-    <section className="py-24 bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
+    <section className="py-24 bg-gradient-to-br from-orange-50 via-white to-red-50 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-orange-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-72 h-72 bg-red-400 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -21,7 +23,7 @@ export function WaitlistSection() {
           className="text-center mb-12"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
               Únete a la Revolución
             </span>
             <br />
@@ -29,7 +31,7 @@ export function WaitlistSection() {
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Sé parte de la transformación que está redefiniendo cómo las empresas se conectan con sus clientes. 
-            Regístrate ahora y obtén acceso prioritario a NeurAnt.
+            Regístrate ahora y obtén acceso prioritario a <NeurAntLogo fontSize="1.25rem" isDarkBackground={false} className="inline" />.
           </p>
         </motion.div>
 
@@ -52,8 +54,8 @@ export function WaitlistSection() {
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="flex flex-col items-center space-y-3">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
-                <span className="text-2xl">🚀</span>
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center">
+                <Rocket className="w-8 h-8 text-orange-600" />
               </div>
               <h3 className="font-semibold text-gray-900">Acceso Anticipado</h3>
               <p className="text-sm text-gray-600 text-center">
@@ -63,7 +65,7 @@ export function WaitlistSection() {
 
             <div className="flex flex-col items-center space-y-3">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-                <span className="text-2xl">🎯</span>
+                <Target className="w-8 h-8 text-green-600" />
               </div>
               <h3 className="font-semibold text-gray-900">Configuración Personalizada</h3>
               <p className="text-sm text-gray-600 text-center">
@@ -72,8 +74,8 @@ export function WaitlistSection() {
             </div>
 
             <div className="flex flex-col items-center space-y-3">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center">
-                <span className="text-2xl">👥</span>
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+                <Users className="w-8 h-8 text-red-600" />
               </div>
               <h3 className="font-semibold text-gray-900">Soporte Exclusivo</h3>
               <p className="text-sm text-gray-600 text-center">
@@ -93,7 +95,7 @@ export function WaitlistSection() {
         >
           <p>
             Únete a empresas de tecnología, e-commerce, servicios financieros y más 
-            que ya confían en NeurAnt para transformar su atención al cliente.
+            que ya confían en <NeurAntLogo fontSize="0.875rem" isDarkBackground={false} className="inline" /> para transformar su atención al cliente.
           </p>
         </motion.div>
       </div>

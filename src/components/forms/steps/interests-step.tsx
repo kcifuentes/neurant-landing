@@ -1,7 +1,7 @@
 'use client';
 
 import { UseFormReturn } from 'react-hook-form';
-import { Bot, BarChart3, MessageSquare } from 'lucide-react';
+import { Bot, BarChart3, MessageSquare, Rocket } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -56,13 +56,13 @@ export function InterestsStep({ form }: InterestsStepProps) {
                 </FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="h-12 px-4 bg-slate-800/50 border-slate-600/50 text-white focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 rounded-xl transition-all duration-300">
-                      <SelectValue placeholder="Selecciona el uso principal" className="text-slate-400" />
+                    <SelectTrigger className="h-12 px-4 bg-slate-800/50 border-slate-600/50 text-white data-[placeholder]:text-slate-400 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 rounded-xl transition-all duration-300">
+                      <SelectValue placeholder="Selecciona el uso principal" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="bg-slate-800 border-slate-600">
                     {CHATBOT_TYPE_OPTIONS.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
+                      <SelectItem key={option.value} value={option.value} className="text-white hover:bg-slate-700 focus:bg-slate-700">
                         {option.label}
                       </SelectItem>
                     ))}
@@ -91,13 +91,13 @@ export function InterestsStep({ form }: InterestsStepProps) {
                 </FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="h-12 px-4 bg-slate-800/50 border-slate-600/50 text-white focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 rounded-xl transition-all duration-300">
-                      <SelectValue placeholder="Selecciona el volumen esperado" className="text-slate-400" />
+                    <SelectTrigger className="h-12 px-4 bg-slate-800/50 border-slate-600/50 text-white data-[placeholder]:text-slate-400 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 rounded-xl transition-all duration-300">
+                      <SelectValue placeholder="Selecciona el volumen esperado" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="bg-slate-800 border-slate-600">
                     {EXPECTED_VOLUME_OPTIONS.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
+                      <SelectItem key={option.value} value={option.value} className="text-white hover:bg-slate-700 focus:bg-slate-700">
                         {option.label}
                       </SelectItem>
                     ))}
@@ -178,8 +178,9 @@ export function InterestsStep({ form }: InterestsStepProps) {
               </svg>
             </div>
             <div className="space-y-3">
-              <div className="font-semibold text-white text-lg">
-                🚀 ¡Estás a un paso de completar tu registro!
+              <div className="font-semibold text-white text-lg flex items-center gap-2">
+                <Rocket className="w-5 h-5 text-orange-400" />
+                ¡Estás a un paso de completar tu registro!
               </div>
               <div className="text-slate-300 leading-relaxed">
                 <p className="mb-3">Una vez que envíes el formulario:</p>

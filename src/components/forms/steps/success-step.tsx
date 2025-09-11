@@ -1,9 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { CheckCircle, Mail, Rocket, Users, Calendar } from 'lucide-react';
+import { CheckCircle, Mail, Rocket, Users, Calendar, PartyPopper } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { NeurAntLogo } from '@/components/ui/neurant-logo';
 
 interface SuccessStepProps {
   onReset: () => void;
@@ -33,8 +34,9 @@ export function SuccessStep({ onReset }: SuccessStepProps) {
             transition={{ delay: 0.3 }}
             className="space-y-3"
           >
-            <h2 className="text-3xl font-bold text-gray-900">
-              ¡Bienvenido a NeurAnt! 🎉
+            <h2 className="text-3xl font-bold text-gray-900 flex items-center justify-center gap-2">
+              ¡Bienvenido a <NeurAntLogo fontSize="2.25rem" isDarkBackground={false} />! 
+              <PartyPopper className="w-8 h-8 text-orange-500" />
             </h2>
             <p className="text-lg text-gray-600">
               Tu registro ha sido enviado exitosamente. Estás oficialmente en nuestra lista de espera.
@@ -46,29 +48,29 @@ export function SuccessStep({ onReset }: SuccessStepProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="bg-blue-50 border border-blue-200 rounded-lg p-6 text-left"
+            className="bg-orange-50 border border-orange-200 rounded-lg p-6 text-left"
           >
-            <h3 className="font-semibold text-blue-900 mb-4 flex items-center">
+            <h3 className="font-semibold text-orange-900 mb-4 flex items-center">
               <Mail className="w-5 h-5 mr-2" />
               ¿Qué sigue ahora?
             </h3>
-            <div className="space-y-3 text-sm text-blue-800">
+            <div className="space-y-3 text-sm text-orange-800">
               <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
                 <div>
                   <strong>Confirmación por email:</strong> Revisa tu bandeja de entrada para confirmar tu registro.
                 </div>
               </div>
               <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
                 <div>
                   <strong>Actualizaciones regulares:</strong> Te mantendremos informado sobre nuestro progreso y nuevas funcionalidades.
                 </div>
               </div>
               <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                <div className="w-2 h-2 bg-orange-500 rounded-full mt-2 flex-shrink-0"></div>
                 <div>
-                  <strong>Acceso prioritario:</strong> Serás de los primeros en usar NeurAnt cuando esté listo.
+                  <strong>Acceso prioritario:</strong> Serás de los primeros en usar <NeurAntLogo fontSize="0.875rem" isDarkBackground={false} className="inline" /> cuando esté listo.
                 </div>
               </div>
             </div>
@@ -106,14 +108,14 @@ export function SuccessStep({ onReset }: SuccessStepProps) {
             className="space-y-4"
           >
             <div className="text-sm text-gray-600">
-              ¿Conoces a alguien que podría estar interesado? ¡Comparte NeurAnt!
+              ¿Conoces a alguien que podría estar interesado? ¡Comparte <NeurAntLogo fontSize="0.875rem" isDarkBackground={false} className="inline" />!
             </div>
             <div className="flex justify-center space-x-3">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => {
-                  const text = "¡Acabo de unirme a la lista de espera de NeurAnt! 🚀 La plataforma de chatbots con IA que va a revolucionar la atención al cliente. ¡Únete!";
+                  const text = "¡Acabo de unirme a la lista de espera de NeurAnt! La plataforma de chatbots con IA que va a revolucionar la atención al cliente. ¡Únete!";
                   const url = window.location.origin;
                   window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
                 }}
@@ -149,7 +151,7 @@ export function SuccessStep({ onReset }: SuccessStepProps) {
             </Button>
             <Button
               onClick={() => window.location.href = '/'}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600"
             >
               Volver al inicio
             </Button>
@@ -158,7 +160,7 @@ export function SuccessStep({ onReset }: SuccessStepProps) {
           {/* Footer note */}
           <div className="text-xs text-gray-500 pt-4 border-t">
             ¿Tienes preguntas? Contáctanos en{' '}
-            <a href="mailto:hola@neurant.com" className="text-blue-600 hover:underline">
+            <a href="mailto:hola@neurant.com" className="text-orange-600 hover:underline">
               hola@neurant.com
             </a>
           </div>

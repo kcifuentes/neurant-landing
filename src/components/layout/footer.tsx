@@ -98,7 +98,7 @@ export function Footer() {
                 <li key={link.name}>
                   <button
                     onClick={() => scrollToSection(link.href)}
-                    className="text-slate-300 hover:text-orange-400 transition-colors duration-200 hover:translate-x-1 transform inline-block"
+                    className="text-slate-300 hover:text-orange-400 transition-colors duration-200 hover:translate-x-1 transform inline-block cursor-pointer"
                   >
                     {link.name}
                   </button>
@@ -120,7 +120,7 @@ export function Footer() {
                 <li key={link.name}>
                   <button
                     onClick={() => scrollToSection(link.href)}
-                    className="text-slate-300 hover:text-orange-400 transition-colors duration-200 hover:translate-x-1 transform inline-block"
+                    className="text-slate-300 hover:text-orange-400 transition-colors duration-200 hover:translate-x-1 transform inline-block cursor-pointer"
                   >
                     {link.name}
                   </button>
@@ -150,7 +150,7 @@ export function Footer() {
                 <span key={link.name} className="flex items-center space-x-2">
                   <button
                     onClick={() => scrollToSection(link.href)}
-                    className="text-slate-400 hover:text-orange-400 transition-colors duration-200"
+                    className="text-slate-400 hover:text-orange-400 transition-colors duration-200 cursor-pointer"
                   >
                     {link.name}
                   </button>
@@ -167,7 +167,7 @@ export function Footer() {
                 <button
                   key={social.name}
                   onClick={() => scrollToSection(social.href)}
-                  className="p-2 rounded-full bg-slate-800/50 text-slate-400 hover:bg-orange-500 hover:text-white transition-all duration-300 hover:scale-110"
+                  className="p-2 rounded-full bg-slate-800/50 text-slate-400 hover:bg-orange-500 hover:text-white transition-all duration-300 hover:scale-110 cursor-pointer"
                   aria-label={social.name}
                 >
                   <social.icon className="h-4 w-4" />

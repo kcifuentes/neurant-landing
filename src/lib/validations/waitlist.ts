@@ -53,12 +53,13 @@ export const WaitlistRegistrationSchema = z.object({
     .max(100, 'El email no puede exceder 100 caracteres')
     .regex(emailRegex, 'Formato de email inválido'),
 
-  // Country code validation (ISO 3166-1 alpha-2)
+  // Country name validation (full country name)
   country: z
     .string()
-    .length(2, 'El código de país debe tener exactamente 2 caracteres')
-    .toUpperCase()
-    .regex(/^[A-Z]{2}$/, 'Código de país inválido'),
+    .trim()
+    .min(2, 'El país es requerido')
+    .max(100, 'El nombre del país no puede exceder 100 caracteres')
+    .regex(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s-]+$/, 'El país contiene caracteres no válidos'),
 
   // Company name validation
   companyName: z
@@ -175,8 +176,8 @@ const mapCompanySize = (size: string): string => {
     'startup': '1-10',
     'small': '11-50',
     'medium': '51-200',
-    'large': '201-500',
-    'enterprise': '500+'
+    'large': '201-1000',
+    'enterprise': '1000+'
   };
   return sizeMap[size] || size;
 };

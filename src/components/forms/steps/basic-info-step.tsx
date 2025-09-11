@@ -111,13 +111,13 @@ export function BasicInfoStep({ form }: BasicInfoStepProps) {
                 </FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="h-12 px-4 bg-slate-800/50 border-slate-600/50 text-white focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 rounded-xl transition-all duration-300">
-                      <SelectValue placeholder="Selecciona tu país" className="text-slate-400" />
+                    <SelectTrigger className="h-12 px-4 bg-slate-800/50 border-slate-600/50 text-white data-[placeholder]:text-slate-400 focus:border-orange-400 focus:ring-2 focus:ring-orange-400/20 rounded-xl transition-all duration-300">
+                      <SelectValue placeholder="Selecciona tu país" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="bg-slate-800 border-slate-600">
                     {countries.map((country) => (
-                      <SelectItem key={country.code} value={country.code}>
+                      <SelectItem key={country.code} value={country.name} className="text-white hover:bg-slate-700 focus:bg-slate-700">
                         {country.name}
                       </SelectItem>
                     ))}

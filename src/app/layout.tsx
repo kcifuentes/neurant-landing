@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Baumans } from "next/font/google";
+import { Geist, Geist_Mono, Baumans, Roboto } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -21,6 +21,13 @@ const baumans = Baumans({
   variable: "--font-baumans",
   subsets: ["latin"],
   weight: "400",
+  display: "swap",
+});
+
+const roboto = Roboto({
+  variable: "--font-roboto",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
   display: "swap",
 });
 
@@ -52,7 +59,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${baumans.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${baumans.variable} ${roboto.variable} antialiased font-roboto`}
       >
         <Header />
         <main className="pt-20">

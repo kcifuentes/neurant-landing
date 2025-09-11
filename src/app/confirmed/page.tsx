@@ -3,7 +3,7 @@
 import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { CheckCircle, Mail, Rocket, Users, Calendar, Share2, ArrowLeft } from 'lucide-react';
+import { CheckCircle, Mail, Rocket, Users, Calendar, Share2, ArrowLeft, PartyPopper } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -27,7 +27,7 @@ function ConfirmedContent() {
   }, [searchParams, router]);
 
   const handleSocialShare = (platform: 'twitter' | 'linkedin') => {
-    const text = "¡Acabo de unirme a la lista de espera de NeurAnt! 🚀 La plataforma de chatbots con IA que va a revolucionar la atención al cliente en Colombia. ¡Únete!";
+    const text = "¡Acabo de unirme a la lista de espera de NeurAnt! La plataforma de chatbots con IA que va a revolucionar la atención al cliente en Colombia. ¡Únete!";
     const url = window.location.origin;
 
     if (platform === 'twitter') {
@@ -126,7 +126,7 @@ function ConfirmedContent() {
               className="space-y-4"
             >
               <h1 className="text-4xl lg:text-5xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-                ¡Bienvenido a NeurAnt! 🎉
+                ¡Bienvenido a NeurAnt! <PartyPopper className="inline w-10 h-10 ml-2 text-green-500" />
               </h1>
               <p className="text-xl text-gray-700 leading-relaxed">
                 Tu registro ha sido confirmado exitosamente. Eres oficialmente parte de nuestra 
