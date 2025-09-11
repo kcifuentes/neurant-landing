@@ -58,11 +58,8 @@ class EmailQueue {
   };
 
   constructor() {
-    // Process queue every 30 seconds
-    setInterval(() => this.processQueue(), 30000);
-    
-    // Clean up old jobs every 5 minutes
-    setInterval(() => this.cleanup(), 5 * 60 * 1000);
+    // Note: setInterval doesn't work in Vercel serverless environment
+    // Queue processing is handled via immediate execution and API calls
   }
 
   add(job: Omit<EmailJob, 'id' | 'status' | 'attempts' | 'createdAt'>): string {
@@ -79,10 +76,10 @@ class EmailQueue {
     this.queue.push(emailJob);
     this.metrics.pending++;
     
-    // Process immediately if not already processing
-    if (!this.processing) {
-      setTimeout(() => this.processQueue(), 1000);
-    }
+    // Process immediately for serverless environments (Vercel)
+    this.processQueue().catch(error => {
+      console.error('[EmailQueue] Error processing queue:', error);
+    });
 
     return jobId;
   }
@@ -93,35 +90,43 @@ class EmailQueue {
     this.processing = true;
     const pendingJobs = this.queue.filter(job => job.status === 'pending');
 
+    console.log(`[EmailQueue] Processing ${pendingJobs.length} pending jobs`);
+
     for (const job of pendingJobs) {
       if (job.attempts >= job.maxAttempts) {
         job.status = 'failed';
         job.error = 'Max attempts exceeded';
         this.metrics.pending--;
         this.metrics.totalFailed++;
+        console.log(`[EmailQueue] Job ${job.id} failed: Max attempts exceeded`);
         continue;
       }
 
       try {
+        console.log(`[EmailQueue] Sending email job ${job.id} to ${job.to}`);
         await this.sendEmail(job);
         job.status = 'sent';
         job.sentAt = new Date();
         this.metrics.totalSent++;
         this.metrics.pending--;
         this.metrics.lastSentAt = new Date();
+        console.log(`[EmailQueue] Job ${job.id} sent successfully`);
       } catch (error) {
         job.attempts++;
         job.error = error instanceof Error ? error.message : 'Unknown error';
+        console.error(`[EmailQueue] Job ${job.id} failed (attempt ${job.attempts}/${job.maxAttempts}):`, error);
         
         if (job.attempts >= job.maxAttempts) {
           job.status = 'failed';
           this.metrics.pending--;
           this.metrics.totalFailed++;
+          console.log(`[EmailQueue] Job ${job.id} permanently failed after ${job.maxAttempts} attempts`);
         }
       }
     }
 
     this.processing = false;
+    console.log(`[EmailQueue] Queue processing completed. Metrics:`, this.metrics);
   }
 
   private async sendEmail(job: EmailJob): Promise<void> {
@@ -146,6 +151,7 @@ class EmailQueue {
     // Log data being sent for debugging
     console.log('[EmailService] Sending email with data:', {
       to,
+      subject,
       dataKeys: Object.keys(data),
       sampleData: {
         phone: data.phone,
@@ -154,12 +160,19 @@ class EmailQueue {
       }
     });
 
-    await resend.emails.send({
+    const result = await resend.emails.send({
       from: process.env.EMAIL_FROM || 'NeurAnt <no-reply@notifications.innovarting.com>',
       to,
       subject,
       html,
       text: text || undefined,
+    });
+
+    console.log('[EmailService] Email sent successfully:', { 
+      to, 
+      subject, 
+      resendId: result.data?.id,
+      error: result.error 
     });
   }
 
