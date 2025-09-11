@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useWaitlistMetrics } from '../../hooks/use-waitlist-metrics'
 import { motion, type Variants } from 'framer-motion'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
@@ -76,16 +77,23 @@ const countVariants: Variants = {
 }
 
 export function ExpectativaMomentumSection() {
-  const [stats, setStats] = useState<StatsData>({
-    total_registrations: 247,
-    countries_represented: 12,
-    top_industries: [
-      { name: 'E-commerce', slug: 'ecommerce', registrations: 89 },
-      { name: 'SaaS', slug: 'saas', registrations: 76 },
-      { name: 'Fintech', slug: 'fintech', registrations: 45 }
+  const { metrics } = useWaitlistMetrics()
+  
+  // Use real metrics or fallbacks
+  const stats = {
+    total_registrations: metrics?.totalCompanies || 12,
+    countries_represented: metrics?.totalCountries || 3,
+    top_industries: metrics?.topIndustries?.map(industry => ({
+      name: industry.industry,
+      slug: industry.industry.toLowerCase().replace(/\s+/g, '-'),
+      registrations: industry.count
+    })) || [
+      { name: 'E-commerce', slug: 'ecommerce', registrations: 5 },
+      { name: 'Tecnología', slug: 'tecnologia', registrations: 4 },
+      { name: 'Servicios', slug: 'servicios', registrations: 3 }
     ],
-    last_updated: '2025-09-10T00:00:00.000Z'
-  })
+    last_updated: metrics?.lastUpdated || new Date().toISOString()
+  }
 
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
     days: 0,
@@ -112,25 +120,6 @@ export function ExpectativaMomentumSection() {
 
     return { days: 0, hours: 0, minutes: 0, seconds: 0 }
   }
-
-  // Fetch stats from API
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const response = await fetch('/api/stats')
-        if (response.ok) {
-          const result = await response.json()
-          if (result.success && result.data) {
-            setStats(result.data)
-          }
-        }
-      } catch (error) {
-        console.log('Using default stats data:', error)
-      }
-    }
-
-    fetchStats()
-  }, [])
 
   // Update countdown timer
   useEffect(() => {

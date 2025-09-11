@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useWaitlistMetrics } from '../../hooks/use-waitlist-metrics'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -29,38 +30,16 @@ interface StatsData {
 }
 
 export function HeroSection() {
-  const [stats, setStats] = useState<StatsData>({
-    totalRegistrations: 247,
-    countries: 12,
-    topIndustries: [
-      { name: 'E-commerce', count: 89 },
-      { name: 'SaaS', count: 76 },
-      { name: 'Fintech', count: 45 }
-    ]
-  })
-
+  const { metrics, isLoading } = useWaitlistMetrics()
+  
   const particles = generateParticles(15)
 
-  useEffect(() => {
-    // Fetch stats from API to update default data
-    const fetchStats = async () => {
-      try {
-        const response = await fetch('/api/stats')
-        if (response.ok) {
-          const data = await response.json()
-          // Only update if we have valid data
-          if (data && typeof data.totalRegistrations === 'number') {
-            setStats(data)
-          }
-        }
-      } catch (error) {
-        // Keep default data, no need to handle error
-        console.log('Using default stats data')
-      }
-    }
-
-    fetchStats()
-  }, [])
+  // Use metrics data or fallback values
+  const displayStats = {
+    totalRegistrations: metrics?.totalCompanies || 12,
+    countries: metrics?.totalCountries || 3,
+    topIndustry: metrics?.topIndustries[0]?.industry || 'E-commerce'
+  }
 
 
   return (
@@ -509,8 +488,8 @@ export function HeroSection() {
               className="mt-12 text-center xl:text-left text-lg text-white/60 max-w-2xl font-light tracking-wide"
               variants={fadeInUpVariants}
             >
-              Únete a más de <span className="text-orange-300 font-semibold">247+ empresas</span> que ya están 
-              transformando su atención al cliente con inteligencia artificial
+              Únete a las <span className="text-orange-300 font-semibold">empresas pioneras</span> que han elegido 
+              el futuro de la atención al cliente con inteligencia artificial
             </motion.p>
           </motion.div>
 
@@ -522,8 +501,8 @@ export function HeroSection() {
                 variants={fadeInUpVariants}
                 style={{ textShadow: '0 0 20px rgba(255, 255, 255, 0.3)' }}
               >
-                Empresas de <span className="font-bold text-orange-200">vanguardia</span> ya están transformando 
-                su atención al cliente con <span className="font-bold text-white"><NeurAntLogo fontSize="clamp(1.5rem, 4vw, 1.875rem)" isDarkBackground={true} className="inline" /></span>
+                Empresas de <span className="font-bold text-orange-200">vanguardia</span> confían en el futuro de 
+                la atención al cliente con <span className="font-bold text-white"><NeurAntLogo fontSize="clamp(1.5rem, 4vw, 1.875rem)" isDarkBackground={true} className="inline" /></span>
               </motion.p>
             </div>
             
@@ -549,7 +528,7 @@ export function HeroSection() {
                           ` 
                         }}
                       >
-                        {stats.totalRegistrations.toLocaleString()}+
+                        {displayStats.totalRegistrations.toLocaleString()}+
                       </div>
                       <div className="text-2xl font-bold text-orange-200 tracking-wide">
                         Empresas Registradas
@@ -583,13 +562,13 @@ export function HeroSection() {
                           ` 
                         }}
                       >
-                        {stats.countries}+
+                        {displayStats.countries}+
                       </div>
                       <div className="text-2xl font-bold text-orange-200 tracking-wide">
-                        Países Conquistados
+                        Países Confiando
                       </div>
                       <div className="text-lg text-white/70 font-medium">
-                        Expansión global imparable
+                        Crecimiento global orgánico
                       </div>
                     </div>
                   </Card>
@@ -617,7 +596,7 @@ export function HeroSection() {
                             ` 
                           }}
                         >
-                          #{stats.topIndustries[0]?.name?.replace('-', '\u2011') || 'E\u2011commerce'}
+                          #{displayStats.topIndustry?.replace('-', '\u2011') || 'E\u2011commerce'}
                         </div>
                       </div>
                       <div className="text-2xl font-bold text-orange-200 tracking-wide">

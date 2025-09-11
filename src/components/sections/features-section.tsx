@@ -159,8 +159,8 @@ export function FeaturesSection() {
             viewport={viewportOptions}
             className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed"
           >
-            Descubre por qué más de <strong className="text-orange-600 dark:text-orange-400">500+ empresas</strong> confían en NeurAnt para transformar 
-            su experiencia de atención al cliente con inteligencia artificial.
+            Descubre por qué empresas visionarias han elegido <strong className="text-orange-600 dark:text-orange-400">NeurAnt</strong> como su aliado para transformar 
+            la experiencia de atención al cliente con inteligencia artificial.
           </motion.p>
         </motion.div>
 
@@ -249,8 +249,8 @@ export function FeaturesSection() {
                 whileInView="visible"
                 viewport={viewportOptions}
               >
-                Únete a cientos de empresas que ya están automatizando sus procesos 
-                y mejorando la satisfacción de sus clientes con <strong className="text-orange-600 dark:text-orange-400">NeurAnt</strong>.
+                Únete a las empresas pioneras que confían en <strong className="text-orange-600 dark:text-orange-400">NeurAnt</strong> para revolucionar 
+                sus procesos de atención al cliente con inteligencia artificial.
               </motion.p>
               
               <motion.div
