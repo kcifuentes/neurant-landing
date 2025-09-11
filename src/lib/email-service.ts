@@ -232,9 +232,14 @@ export const emailTemplates = {
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>Bienvenido a NeurAnt</title>
           <style>
+            @import url('https://fonts.googleapis.com/css2?family=Baumans:wght@400&display=swap');
             @media only screen and (max-width: 600px) {
               .container { width: 100% !important; padding: 20px !important; }
               .content { padding: 20px !important; }
+            }
+            .neurant-logo { 
+              font-family: 'Baumans', 'Georgia', serif; 
+              font-weight: 400; 
             }
           </style>
         </head>
@@ -243,34 +248,37 @@ export const emailTemplates = {
             <div style="background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden;">
               
               <!-- Header -->
-              <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 30px; text-align: center;">
-                <h1 style="color: white; margin: 0; font-size: 28px; font-weight: 600;">¡Bienvenido a NeurAnt!</h1>
+              <div style="background: linear-gradient(135deg, #F97316 0%, #EA580C 50%, #DC2626 100%); padding: 40px 30px; text-align: center;">
+                <div class="neurant-logo" style="font-size: 32px; font-weight: 400; margin-bottom: 10px;">
+                  <span style="color: #FFFFFF;">N</span><span style="color: rgba(255, 255, 255, 0.9);">eur</span><span style="color: #FFFFFF;">A</span><span style="color: rgba(255, 255, 255, 0.9);">nt</span>
+                </div>
+                <h1 style="color: white; margin: 0; font-size: 26px; font-weight: 600;">¡Bienvenido!</h1>
                 <p style="color: rgba(255, 255, 255, 0.9); margin: 10px 0 0 0; font-size: 16px;">Tu registro ha sido confirmado exitosamente</p>
               </div>
 
               <!-- Content -->
               <div class="content" style="padding: 40px 30px;">
-                <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">Hola <strong>{{full_name}}</strong>,</p>
+                <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">Hola <strong style="color: #F97316;">{{full_name}}</strong>,</p>
                 
                 <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
-                  ¡Gracias por unirte a nuestra lista de espera! Hemos registrado tu interés en NeurAnt y estás un paso más cerca de transformar la manera en que tu empresa interactúa con los clientes.
+                  ¡Gracias por unirte a nuestra lista de espera! Hemos registrado tu interés en <strong class="neurant-logo" style="color: #F97316;">NeurAnt</strong> y estás un paso más cerca de transformar la manera en que tu empresa interactúa con los clientes.
                 </p>
 
-                <div style="background: #f3f4f6; border-radius: 8px; padding: 25px; margin: 30px 0;">
-                  <h3 style="color: #1f2937; margin: 0 0 15px 0; font-size: 18px;">Información registrada:</h3>
-                  <p style="color: #6b7280; margin: 0 0 8px 0;"><strong>Email:</strong> {{email}}</p>
-                  <p style="color: #6b7280; margin: 0 0 8px 0;"><strong>Empresa:</strong> {{company_name}}</p>
-                  <p style="color: #6b7280; margin: 0 0 8px 0;"><strong>Industria:</strong> {{industry}}</p>
-                  <p style="color: #6b7280; margin: 0;"><strong>Tamaño:</strong> {{company_size}}</p>
+                <div style="background: #FFF7ED; border-radius: 8px; border-left: 4px solid #F97316; padding: 25px; margin: 30px 0;">
+                  <h3 style="color: #C2410C; margin: 0 0 15px 0; font-size: 18px;">Información registrada:</h3>
+                  <p style="color: #9A3412; margin: 0 0 8px 0;"><strong>Email:</strong> {{email}}</p>
+                  <p style="color: #9A3412; margin: 0 0 8px 0;"><strong>Empresa:</strong> {{company_name}}</p>
+                  <p style="color: #9A3412; margin: 0 0 8px 0;"><strong>Industria:</strong> {{industry}}</p>
+                  <p style="color: #9A3412; margin: 0;"><strong>Tamaño:</strong> {{company_size}}</p>
                 </div>
 
                 <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 30px 0;">
-                  <strong>¿Qué sigue ahora?</strong><br>
+                  <strong style="color: #F97316;">¿Qué sigue ahora?</strong><br>
                   Nuestro equipo revisará tu información y te contactaremos pronto con acceso temprano a la plataforma y una demostración personalizada.
                 </p>
 
                 <div style="text-align: center; margin: 30px 0;">
-                  <a href="https://neurant.ai" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">
+                  <a href="https://neurant.innovarting.com" style="background: linear-gradient(135deg, #F97316 0%, #EA580C 100%); color: white; padding: 14px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block; box-shadow: 0 4px 6px rgba(249, 115, 22, 0.25);">
                     Visitar NeurAnt
                   </a>
                 </div>
@@ -278,6 +286,9 @@ export const emailTemplates = {
 
               <!-- Footer -->
               <div style="background: #f9fafb; padding: 30px; text-align: center; border-top: 1px solid #e5e7eb;">
+                <div class="neurant-logo" style="font-size: 18px; margin-bottom: 10px;">
+                  <span style="color: #F97316;">N</span><span style="color: #6B7280;">eur</span><span style="color: #F97316;">A</span><span style="color: #6B7280;">nt</span>
+                </div>
                 <p style="color: #9ca3af; font-size: 14px; margin: 0 0 10px 0;">
                   Este email fue enviado a {{email}}
                 </p>
@@ -321,71 +332,81 @@ Este email fue enviado a {{email}}
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <title>Nuevo Registro - Waitlist</title>
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Baumans:wght@400&display=swap');
+            .neurant-logo { 
+              font-family: 'Baumans', 'Georgia', serif; 
+              font-weight: 400; 
+            }
+          </style>
         </head>
         <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f8fafc;">
           <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-            <div style="background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); overflow: hidden;">
+            <div style="background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden;">
               
               <!-- Header -->
-              <div style="background: #059669; padding: 20px; text-align: center;">
-                <h1 style="color: white; margin: 0; font-size: 24px;">🎯 Nuevo Registro Waitlist</h1>
+              <div style="background: linear-gradient(135deg, #F97316 0%, #EA580C 50%, #DC2626 100%); padding: 25px 20px; text-align: center;">
+                <div class="neurant-logo" style="font-size: 24px; margin-bottom: 8px;">
+                  <span style="color: #FFFFFF;">N</span><span style="color: rgba(255, 255, 255, 0.9);">eur</span><span style="color: #FFFFFF;">A</span><span style="color: rgba(255, 255, 255, 0.9);">nt</span>
+                </div>
+                <h1 style="color: white; margin: 0; font-size: 22px; font-weight: 600;">🎯 Nuevo Registro Waitlist</h1>
               </div>
 
               <!-- Content -->
               <div style="padding: 30px;">
                 <p style="color: #374151; font-size: 16px; margin: 0 0 20px 0;">
-                  Se ha registrado un nuevo usuario en la waitlist de NeurAnt:
+                  Se ha registrado un nuevo usuario en la waitlist de <strong class="neurant-logo" style="color: #F97316;">NeurAnt</strong>:
                 </p>
 
-                <div style="background: #f0f9ff; border-left: 4px solid #0ea5e9; padding: 20px; margin: 20px 0;">
-                  <h3 style="color: #0c4a6e; margin: 0 0 15px 0;">Información del Cliente</h3>
+                <div style="background: #FFF7ED; border-left: 4px solid #F97316; border-radius: 6px; padding: 20px; margin: 20px 0;">
+                  <h3 style="color: #C2410C; margin: 0 0 15px 0; font-size: 18px;">Información del Cliente</h3>
                   <table style="width: 100%; border-collapse: collapse;">
                     <tr>
-                      <td style="padding: 8px 0; color: #374151; font-weight: 600; width: 120px;">Nombre:</td>
-                      <td style="padding: 8px 0; color: #1f2937;">{{full_name}}</td>
+                      <td style="padding: 8px 0; color: #9A3412; font-weight: 600; width: 120px;">Nombre:</td>
+                      <td style="padding: 8px 0; color: #7C2D12;">{{full_name}}</td>
                     </tr>
                     <tr>
-                      <td style="padding: 8px 0; color: #374151; font-weight: 600;">Email:</td>
-                      <td style="padding: 8px 0; color: #1f2937;">{{email}}</td>
+                      <td style="padding: 8px 0; color: #9A3412; font-weight: 600;">Email:</td>
+                      <td style="padding: 8px 0; color: #7C2D12;">{{email}}</td>
                     </tr>
                     <tr>
-                      <td style="padding: 8px 0; color: #374151; font-weight: 600;">Teléfono:</td>
-                      <td style="padding: 8px 0; color: #1f2937;">{{phone}}</td>
+                      <td style="padding: 8px 0; color: #9A3412; font-weight: 600;">Teléfono:</td>
+                      <td style="padding: 8px 0; color: #7C2D12;">{{phone}}</td>
                     </tr>
                     <tr>
-                      <td style="padding: 8px 0; color: #374151; font-weight: 600;">Empresa:</td>
-                      <td style="padding: 8px 0; color: #1f2937;">{{company_name}}</td>
+                      <td style="padding: 8px 0; color: #9A3412; font-weight: 600;">Empresa:</td>
+                      <td style="padding: 8px 0; color: #7C2D12;">{{company_name}}</td>
                     </tr>
                     <tr>
-                      <td style="padding: 8px 0; color: #374151; font-weight: 600;">Industria:</td>
-                      <td style="padding: 8px 0; color: #1f2937;">{{industry}}</td>
+                      <td style="padding: 8px 0; color: #9A3412; font-weight: 600;">Industria:</td>
+                      <td style="padding: 8px 0; color: #7C2D12;">{{industry}}</td>
                     </tr>
                     <tr>
-                      <td style="padding: 8px 0; color: #374151; font-weight: 600;">Tamaño:</td>
-                      <td style="padding: 8px 0; color: #1f2937;">{{company_size}}</td>
+                      <td style="padding: 8px 0; color: #9A3412; font-weight: 600;">Tamaño:</td>
+                      <td style="padding: 8px 0; color: #7C2D12;">{{company_size}}</td>
                     </tr>
                     <tr>
-                      <td style="padding: 8px 0; color: #374151; font-weight: 600;">País:</td>
-                      <td style="padding: 8px 0; color: #1f2937;">{{country}}</td>
+                      <td style="padding: 8px 0; color: #9A3412; font-weight: 600;">País:</td>
+                      <td style="padding: 8px 0; color: #7C2D12;">{{country}}</td>
                     </tr>
                     <tr>
-                      <td style="padding: 8px 0; color: #374151; font-weight: 600;">Chatbot:</td>
-                      <td style="padding: 8px 0; color: #1f2937;">{{chatbot_type}}</td>
+                      <td style="padding: 8px 0; color: #9A3412; font-weight: 600;">Chatbot:</td>
+                      <td style="padding: 8px 0; color: #7C2D12;">{{chatbot_type}}</td>
                     </tr>
                     <tr>
-                      <td style="padding: 8px 0; color: #374151; font-weight: 600;">Volumen:</td>
-                      <td style="padding: 8px 0; color: #1f2937;">{{expected_volume}}</td>
+                      <td style="padding: 8px 0; color: #9A3412; font-weight: 600;">Volumen:</td>
+                      <td style="padding: 8px 0; color: #7C2D12;">{{expected_volume}}</td>
                     </tr>
                   </table>
                 </div>
 
-                <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0;">
-                  <strong>Website:</strong> <span style="color: #d97706;">{{website}}</span>
+                <div style="background: #FFFBEB; border-left: 4px solid #F59E0B; border-radius: 6px; padding: 15px; margin: 20px 0;">
+                  <strong style="color: #92400E;">Website:</strong> <span style="color: #D97706;">{{website}}</span>
                 </div>
 
-                <div style="background: #f3f4f6; border-radius: 6px; padding: 15px; margin: 20px 0;">
-                  <strong>Comentarios:</strong><br>
-                  <span style="color: #4b5563;">{{comments}}</span>
+                <div style="background: #F3F4F6; border-radius: 6px; padding: 15px; margin: 20px 0;">
+                  <strong style="color: #374151;">Comentarios:</strong><br>
+                  <span style="color: #4B5563;">{{comments}}</span>
                 </div>
 
                 <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
@@ -394,6 +415,16 @@ Este email fue enviado a {{email}}
                     <strong>IP:</strong> {{user_ip}}
                   </p>
                 </div>
+              </div>
+
+              <!-- Footer -->
+              <div style="background: #f9fafb; padding: 20px; text-align: center; border-top: 1px solid #e5e7eb;">
+                <div class="neurant-logo" style="font-size: 16px; margin-bottom: 8px;">
+                  <span style="color: #F97316;">N</span><span style="color: #6B7280;">eur</span><span style="color: #F97316;">A</span><span style="color: #6B7280;">nt</span>
+                </div>
+                <p style="color: #9ca3af; font-size: 13px; margin: 0;">
+                  © 2025 NeurAnt by Innovarting. Sistema de notificaciones interno.
+                </p>
               </div>
             </div>
           </div>

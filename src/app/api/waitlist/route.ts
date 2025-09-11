@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { waitlistService } from '../../../lib/supabase';
-import { EmailService } from '../../../lib/email-service';
+import { EmailService, emailTemplates } from '../../../lib/email-service';
 
 // Rate limiting store (in-memory, per server instance)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
@@ -324,13 +324,34 @@ export async function POST(request: NextRequest) {
         email: emailData.email.replace(/(.{2}).*(@.*)/, '$1***$2') // Mask email for logging
       });
 
-      // Send welcome email to user
-      const welcomeJobId = await EmailService.sendWelcomeEmail(emailData);
-      console.log(`[${requestId}] Welcome email queued: ${welcomeJobId}`);
+      // Send emails directly via Resend (serverless-friendly)
+      console.log(`[${requestId}] Sending emails directly via Resend...`);
+      
+      // Send welcome email directly
+      await EmailService.sendDirectEmail(
+        emailData.email,
+        emailTemplates.welcomeUser,
+        emailData
+      );
+      console.log(`[${requestId}] Welcome email sent directly to ${emailData.email}`);
 
-      // Send internal notification to team
-      const internalJobId = await EmailService.sendInternalNotification(emailData);
-      console.log(`[${requestId}] Internal notification queued: ${internalJobId}`);
+      // Send internal notification directly  
+      const internalEmail = process.env.INTERNAL_NOTIFICATION_EMAIL || 'innovarting.info@gmail.com';
+      await EmailService.sendDirectEmail(
+        internalEmail,
+        emailTemplates.internalNotification,
+        {
+          ...emailData,
+          created_at: new Date().toLocaleString('es-ES', {
+            year: 'numeric',
+            month: 'long', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          })
+        }
+      );
+      console.log(`[${requestId}] Internal notification sent directly to ${internalEmail}`);
 
     } catch (emailError) {
       // Log email errors but don't fail the registration
