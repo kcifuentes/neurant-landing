@@ -77,7 +77,13 @@ class EmailQueue {
     this.metrics.pending++;
     
     // Process immediately for serverless environments (Vercel)
-    this.processQueue().catch(error => {
+    // Add timeout to prevent hanging in production
+    Promise.race([
+      this.processQueue(),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Queue processing timeout')), 25000)
+      )
+    ]).catch(error => {
       console.error('[EmailQueue] Error processing queue:', error);
     });
 
@@ -168,11 +174,23 @@ class EmailQueue {
       text: text || undefined,
     });
 
-    console.log('[EmailService] Email sent successfully:', { 
+    console.log('[EmailService] Resend API response:', { 
       to, 
       subject, 
       resendId: result.data?.id,
-      error: result.error 
+      error: result.error,
+      success: !result.error
+    });
+
+    // Check if Resend returned an error
+    if (result.error) {
+      throw new Error(`Resend API error: ${result.error.message}`);
+    }
+
+    console.log('[EmailService] Email sent successfully:', { 
+      to, 
+      subject, 
+      resendId: result.data?.id
     });
   }
 
@@ -421,6 +439,8 @@ export class EmailService {
 
   static async sendInternalNotification(userData: WaitlistUserData): Promise<string> {
     const internalEmail = process.env.INTERNAL_NOTIFICATION_EMAIL || 'innovarting.info@gmail.com';
+    
+    console.log(`[EmailService] Preparing internal notification to: ${internalEmail}`);
     
     const jobId = emailQueue.add({
       to: internalEmail,
