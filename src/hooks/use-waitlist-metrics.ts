@@ -78,7 +78,8 @@ export function useWaitlistMetrics(): UseWaitlistMetricsReturn {
     } finally {
       setIsLoading(false)
     }
-  }, [metrics])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // Empty deps prevents infinite loop - fetchMetrics only uses setState functions
 
   useEffect(() => {
     fetchMetrics()
@@ -87,7 +88,8 @@ export function useWaitlistMetrics(): UseWaitlistMetricsReturn {
     const interval = setInterval(fetchMetrics, 5 * 60 * 1000)
     
     return () => clearInterval(interval)
-  }, [fetchMetrics])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // fetchMetrics is stable with empty deps - this is intentional
 
   return {
     metrics,
