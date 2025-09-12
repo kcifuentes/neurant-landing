@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 // import { zodResolver } from '@hookform/resolvers/zod';
 import { WaitlistFormSchema, type WaitlistFormData, transformForDatabase } from '@/lib/validations/waitlist';
+import { trackWaitlistStep, trackWaitlistSubmission, trackLeadQualification } from '@/components/analytics/google-analytics';
 
 export type FormStep = 'basic' | 'company' | 'interests';
 
@@ -127,14 +128,8 @@ export function useWaitlistForm(): UseWaitlistFormReturn {
       const nextIndex = currentStepIndex + 1;
       setCurrentStep(STEP_ORDER[nextIndex]);
       
-      // Track analytics for step completion
-      if (typeof window !== 'undefined' && 'gtag' in window) {
-        const gtag = (window as { gtag: (command: string, eventName: string, params?: Record<string, unknown>) => void }).gtag;
-        gtag('event', 'form_step_completed', {
-          step_name: currentStep,
-          step_number: currentStepIndex + 1
-        });
-      }
+      // Track analytics for step completion using new tracking function
+      trackWaitlistStep(currentStep, currentStepIndex + 1);
     }
   };
 
@@ -274,16 +269,22 @@ export function useWaitlistForm(): UseWaitlistFormReturn {
         duration: 8000,
       });
       
-      // Track analytics for form completion
-      if (typeof window !== 'undefined' && 'gtag' in window) {
-        const gtag = (window as { gtag: (command: string, eventName: string, params?: Record<string, unknown>) => void }).gtag;
-        gtag('event', 'form_submitted', {
-          form_name: 'waitlist',
-          company_size: formData.companySize,
-          chatbot_type: formData.chatbotType,
-          country: formData.country
-        });
-      }
+      // Track analytics for form completion using enhanced tracking
+      trackWaitlistSubmission({
+        companySize: formData.companySize,
+        chatbotType: formData.chatbotType,
+        country: formData.country,
+        industryId: formData.industryId
+      });
+
+      // Track lead qualification based on form data
+      const leadScore = calculateLeadScore(formData);
+      trackLeadQualification({
+        leadScore,
+        companySize: formData.companySize,
+        industry: formData.industryId,
+        country: formData.country
+      });
 
     } catch (error) {
       console.error('Form submission error:', error);
@@ -335,5 +336,63 @@ export function useWaitlistForm(): UseWaitlistFormReturn {
     stepProgress,
     stepTitles: STEP_TITLES
   };
+}
+
+// Lead scoring function for analytics
+function calculateLeadScore(formData: WaitlistFormData): number {
+  let score = 50; // Base score
+
+  // Company size scoring
+  switch (formData.companySize) {
+    case 'large':
+      score += 30;
+      break;
+    case 'medium':
+      score += 20;
+      break;
+    case 'small':
+      score += 10;
+      break;
+  }
+
+  // Chatbot type scoring (business value)
+  switch (formData.chatbotType) {
+    case 'sales':
+      score += 25;
+      break;
+    case 'customer_support':
+      score += 20;
+      break;
+    case 'lead_generation':
+      score += 15;
+      break;
+    case 'internal_support':
+      score += 10;
+      break;
+  }
+
+  // Expected volume scoring
+  switch (formData.expectedVolume) {
+    case 'high':
+      score += 15;
+      break;
+    case 'medium':
+      score += 10;
+      break;
+    case 'low':
+      score += 5;
+      break;
+  }
+
+  // Additional factors
+  if (formData.website && formData.website.trim()) {
+    score += 5; // Has website
+  }
+  if (formData.phone && formData.phone.trim()) {
+    score += 5; // Provided phone
+  }
+
+  // Cap the score at 100
+  return Math.min(score, 100);
 }
 

@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { Button } from '@/components/ui/button'
+import { trackCTAClick } from '@/components/analytics/google-analytics'
 import { 
   Clock, 
   TrendingUp, 
@@ -372,6 +373,7 @@ export function ExpectativaMomentumSection() {
                 size="lg" 
                 className="bg-white text-orange-600 hover:bg-orange-50 transition-all duration-300 transform hover:scale-105"
                 onClick={() => {
+                  trackCTAClick('momentum_secure_spot', 'momentum_section');
                   document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })
                 }}
               >

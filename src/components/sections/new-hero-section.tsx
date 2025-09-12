@@ -3,6 +3,7 @@
 import { useWaitlistMetrics } from '../../hooks/use-waitlist-metrics'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
+import { trackCTAClick } from '@/components/analytics/google-analytics'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 import { NeurAntLogo } from '@/components/ui/neurant-logo'
@@ -195,6 +196,7 @@ export function NewHeroSection() {
             <Button 
               size="lg" 
               onClick={() => {
+                trackCTAClick('hero_join_waitlist', 'hero_section');
                 document.getElementById('waitlist')?.scrollIntoView({ behavior: 'smooth' })
               }}
               className="text-lg sm:text-xl lg:text-2xl px-8 sm:px-12 lg:px-16 py-6 sm:py-8 lg:py-10 h-auto bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400 text-white font-black shadow-lg hover:shadow-xl transition-all duration-300 rounded-2xl sm:rounded-3xl border-0"

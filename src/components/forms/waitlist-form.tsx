@@ -9,6 +9,7 @@ import { BasicInfoStep } from './steps/basic-info-step';
 import { CompanyInfoStep } from './steps/company-info-step';
 import { InterestsStep } from './steps/interests-step';
 import { SuccessStep } from './steps/success-step';
+import { trackCTAClick } from '@/components/analytics/google-analytics';
 
 interface WaitlistFormProps {
   className?: string;
@@ -332,7 +333,10 @@ export function WaitlistForm({ className, onSuccess }: WaitlistFormProps) {
             <div>
               <button
                 type="button"
-                onClick={prevStep}
+                onClick={() => {
+                  trackCTAClick('form_previous_step', 'waitlist_form');
+                  prevStep();
+                }}
                 disabled={!canGoPrev || isSubmitting}
                 style={{ cursor: 'pointer' }}
                 className="flex items-center justify-center space-x-2 px-6 py-3 bg-slate-800/50 border border-slate-600/50 text-slate-300 hover:bg-slate-700/50 hover:text-white hover:border-slate-500/50 disabled:opacity-30 transition-all duration-300 disabled:cursor-not-allowed rounded-xl hover:scale-105 transform relative z-20"
@@ -346,7 +350,10 @@ export function WaitlistForm({ className, onSuccess }: WaitlistFormProps) {
               <div>
                 <button
                   type="button"
-                  onClick={handleSubmit}
+                  onClick={() => {
+                    trackCTAClick('form_complete_registration', 'waitlist_form');
+                    handleSubmit();
+                  }}
                   disabled={isSubmitting}
                   style={{ cursor: 'pointer' }}
                   className="flex items-center justify-center space-x-2 px-8 py-3 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400 text-white font-semibold rounded-xl shadow-lg hover:shadow-orange-500/25 disabled:opacity-50 transition-all duration-300 disabled:cursor-not-allowed hover:scale-105 transform relative z-20"
@@ -372,6 +379,7 @@ export function WaitlistForm({ className, onSuccess }: WaitlistFormProps) {
                     e.preventDefault();
                     e.stopPropagation();
                     console.log('BUTTON CLICKED! Current step:', currentStep);
+                    trackCTAClick('form_next_step', 'waitlist_form');
                     nextStep();
                   }}
                   disabled={isSubmitting}

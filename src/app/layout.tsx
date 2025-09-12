@@ -6,6 +6,9 @@ import { Footer } from "@/components/layout/footer";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import { Toaster } from "@/components/ui/toaster";
 import { generateMetadata as generateSEOMetadata, structuredData } from "@/lib/seo-colombia";
+import { GoogleAnalytics } from "@/components/analytics/google-analytics";
+import { EnhancedScrollTracker } from "@/components/analytics/scroll-tracker";
+import { PageTracker, DeviceTracker } from "@/components/analytics/page-tracker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -57,6 +60,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="preconnect" href="https://www.google-analytics.com" />
         <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+        <GoogleAnalytics />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${baumans.variable} ${roboto.variable} antialiased font-roboto`}
@@ -68,6 +72,9 @@ export default function RootLayout({
         <Footer />
         <ScrollToTop />
         <Toaster />
+        <PageTracker />
+        <DeviceTracker />
+        <EnhancedScrollTracker />
       </body>
     </html>
   );
