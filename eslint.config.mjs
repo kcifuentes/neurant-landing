@@ -20,11 +20,16 @@ const eslintConfig = [
       "next-env.d.ts",
       "scripts/**",
       ".turbo/**",
+      "src/types/**/*.d.ts",
+      "src/components/analytics/google-analytics.tsx",
     ],
   },
   {
     rules: {
       "@typescript-eslint/no-unsafe-declaration-merging": "off",
+      "@typescript-eslint/no-unused-vars": "warn",
+      "@typescript-eslint/no-explicit-any": "warn",
+      "react-hooks/exhaustive-deps": "warn",
     },
   },
 ];

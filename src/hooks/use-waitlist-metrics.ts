@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import type { WaitlistMetrics } from '../app/api/metrics/route'
 
 interface UseWaitlistMetricsReturn {
@@ -33,7 +33,7 @@ export function useWaitlistMetrics(): UseWaitlistMetricsReturn {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchMetrics = async () => {
+  const fetchMetrics = useCallback(async () => {
     try {
       setIsLoading(true)
       setError(null)
@@ -78,7 +78,7 @@ export function useWaitlistMetrics(): UseWaitlistMetricsReturn {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [metrics])
 
   useEffect(() => {
     fetchMetrics()
@@ -87,7 +87,7 @@ export function useWaitlistMetrics(): UseWaitlistMetricsReturn {
     const interval = setInterval(fetchMetrics, 5 * 60 * 1000)
     
     return () => clearInterval(interval)
-  }, [])
+  }, [fetchMetrics])
 
   return {
     metrics,

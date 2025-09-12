@@ -15,9 +15,7 @@ import {
   Zap
 } from 'lucide-react'
 import { 
-  staggerContainerVariants, 
   fadeInUpVariants, 
-  glassCardVariants,
   magneticHoverVariants,
   morphingBlobVariants,
   generateParticles,

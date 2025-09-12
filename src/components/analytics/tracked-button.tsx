@@ -24,7 +24,6 @@ export const TrackedButton = forwardRef<HTMLButtonElement, TrackedButtonProps>(
       onClick,
       trackingName,
       trackingLocation,
-      trackingCategory = 'cta_click',
       autoTrack = true,
       children,
       ...props

@@ -21,16 +21,16 @@ import {
   BarChart3
 } from 'lucide-react'
 
-interface StatsData {
-  total_registrations: number
-  countries_represented: number
-  top_industries: Array<{
-    name: string
-    slug: string
-    registrations: number
-  }>
-  last_updated: string
-}
+// interface StatsData {
+//   total_registrations: number
+//   countries_represented: number
+//   top_industries: Array<{
+//     name: string
+//     slug: string
+//     registrations: number
+//   }>
+//   last_updated: string
+// }
 
 interface TimeLeft {
   days: number

@@ -6,19 +6,7 @@ import { useEffect } from 'react';
 // Google Analytics configuration
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
-// Declare gtag function for TypeScript
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-declare global {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-  interface Window {
-    gtag: (
-      command: 'config' | 'event' | 'js' | 'set',
-      targetId: string | Date,
-      config?: Record<string, any>
-    ) => void;
-    dataLayer: any[];
-  }
-}
+// Type declarations are in src/types/google-analytics.d.ts
 
 interface GoogleAnalyticsProps {
   gaId?: string;
@@ -88,7 +76,7 @@ export function GoogleAnalytics({ gaId = GA_ID }: GoogleAnalyticsProps) {
 }
 
 // Utility functions for tracking events
-export const trackEvent = (eventName: string, parameters?: Record<string, any>) => {
+export const trackEvent = (eventName: string, parameters?: Record<string, unknown>) => {
   if (typeof window !== 'undefined' && window.gtag && GA_ID && GA_ID !== 'your_google_analytics_id') {
     window.gtag('event', eventName, {
       event_category: 'engagement',

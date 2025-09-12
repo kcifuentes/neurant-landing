@@ -47,7 +47,7 @@ function ConfirmedContent() {
     try {
       await navigator.clipboard.writeText(window.location.origin);
       // Mostrar feedback visual (podrías implementar un toast aquí)
-    } catch (error) {
+    } catch {
       // Fallback para navegadores que no soportan clipboard API
       const textArea = document.createElement('textarea');
       textArea.value = window.location.origin;

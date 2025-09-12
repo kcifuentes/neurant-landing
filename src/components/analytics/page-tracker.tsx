@@ -22,7 +22,7 @@ function PageTrackerInternal() {
     const referrer = document.referrer;
 
     // Enhanced page view tracking
-    const pageViewData: Record<string, any> = {
+    const pageViewData: Record<string, unknown> = {
       page_title: document.title,
       page_location: window.location.href,
       page_path: pathname,
@@ -136,8 +136,8 @@ export function DeviceTracker() {
     const deviceData = {
       is_mobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
       is_tablet: /iPad|Android(?!.*Mobile)/i.test(navigator.userAgent),
-      connection_type: (navigator as any).connection?.effectiveType || 'unknown',
-      device_memory: (navigator as any).deviceMemory || 'unknown',
+      connection_type: (navigator as { connection?: { effectiveType?: string } }).connection?.effectiveType || 'unknown',
+      device_memory: (navigator as { deviceMemory?: number }).deviceMemory || 'unknown',
       hardware_concurrency: navigator.hardwareConcurrency || 'unknown',
       cookie_enabled: navigator.cookieEnabled,
       do_not_track: navigator.doNotTrack === '1',
