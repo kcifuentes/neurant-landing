@@ -57,7 +57,7 @@ const features: FeatureItem[] = [
   {
     icon: Users,
     title: "Transferencia a Humanos",
-    description: "Escalación automática a agentes humanos cuando se requiere intervención personalizada.",
+    description: "Escalamiento automático a agentes humanos cuando se requiere intervención personalizada.",
     color: "from-orange-500 to-red-600"
   },
   {
